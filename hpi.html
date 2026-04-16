@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Hub — Organized Synergy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:    #212858;
+  --navy-lt: #3A4170;
+  --copper:  #D4937A;
+  --copper-lt:#E8C4B4;
+  --cream:   #F6F2EE;
+  --white:   #FFFFFF;
+  --ink:     #2B2B2B;
+  --ink-2:   #5C6478;
+  --ink-3:   #8A95B0;
+  --border:  #ECE7E1;
+  --green:   #1D9E75;
+  --green-lt:#E1F5EE;
+  --green-dk:#085041;
+  --amber:   #BA7517;
+  --amber-lt:#FDF3E3;
+  --amber-dk:#633806;
+  --red:     #A32D2D;
+  --red-lt:  #FCEBEB;
+  --blue-lt: #EBF3FC;
+  --blue-dk: #0C447C;
+  --r:       12px;
+  --rs:      8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ── HEADER ── */
+.site-header{background:var(--navy);padding:0 32px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:'Playfair Display',serif;color:#fff;font-size:17px;letter-spacing:.01em}
+.logo span{color:var(--copper)}
+.header-tag{font-size:11px;color:rgba(255,255,255,.42);letter-spacing:.08em;text-transform:uppercase}
+
+/* ── HERO ── */
+.hero{background:var(--navy);padding:44px 32px 52px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:340px;height:340px;border-radius:50%;background:rgba(212,147,122,.10);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-60px;left:30%;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.025);pointer-events:none}
+
+.engagement-badge{display:inline-flex;align-items:center;gap:8px;border-radius:20px;padding:5px 13px;margin-bottom:18px;transition:all .4s ease}
+.engagement-badge.active{background:rgba(212,147,122,.18);border:1px solid rgba(212,147,122,.4)}
+.engagement-badge.closed{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15)}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--copper);animation:pulse 2.2s ease-in-out infinite}
+.pulse.closed-dot{background:rgba(255,255,255,.4);animation:none}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.badge-text{font-size:12px;font-weight:500;letter-spacing:.04em}
+.badge-text.active{color:var(--copper)}
+.badge-text.closed{color:rgba(255,255,255,.55)}
+
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4.5vw,36px);color:#fff;line-height:1.2;margin-bottom:9px}
+.hero h1 em{font-style:italic;color:var(--copper)}
+.hero-sub{color:rgba(255,255,255,.6);font-size:14px;font-weight:300;max-width:460px;line-height:1.6}
+
+.hero-meta{display:flex;flex-wrap:wrap;gap:22px;margin-top:24px}
+.mp{display:flex;flex-direction:column;gap:2px}
+.mp .lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.mp .val{font-size:13px;color:rgba(255,255,255,.82);font-weight:500}
+
+/* Closed state overlay message */
+.closed-message{display:none;margin-top:22px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:18px 20px}
+.closed-message.show{display:block}
+.closed-message h3{font-family:'Playfair Display',serif;font-size:17px;color:#fff;margin-bottom:6px}
+.closed-message p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6}
+.closed-message a{color:var(--copper);text-decoration:none}
+.closed-message a:hover{color:#fff}
+
+/* ── LAYOUT ── */
+.page-body{max-width:900px;margin:0 auto;padding:32px 24px 72px;display:grid;grid-template-columns:1fr 304px;gap:22px;align-items:start}
+.col-main{display:flex;flex-direction:column;gap:18px}
+.col-side{display:flex;flex-direction:column;gap:18px}
+
+/* ── CARDS ── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:opacity .3s}
+.card-head{padding:13px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card-head h2{font-size:12px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+.card-body{padding:18px}
+
+/* ── PROGRESS ── */
+.prog-summary{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
+.prog-pct{font-family:'Playfair Display',serif;font-size:34px;color:var(--navy);line-height:1;transition:all .4s}
+.prog-desc{font-size:13px;color:var(--ink-3);line-height:1.4}
+.phases{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:16px}
+.ph{display:flex;flex-direction:column;gap:5px}
+.ph-bar{height:4px;border-radius:2px;background:var(--border);overflow:hidden}
+.ph-fill{height:100%;border-radius:2px;transition:width .6s ease}
+.ph-fill.done{background:var(--green);width:100%}
+.ph-fill.active{background:var(--copper);width:60%}
+.ph-fill.todo{width:0}
+.ph-name{font-size:10px;font-weight:500;color:var(--ink-3);line-height:1.3}
+.ph-name.done{color:var(--green)}
+.ph-name.active{color:var(--amber)}
+
+/* ── MILESTONE CALENDAR ── */
+.milestone-track{position:relative;padding:4px 0 0}
+.milestone-line{position:absolute;left:11px;top:16px;bottom:16px;width:1px;background:var(--border)}
+.milestone-item{display:flex;gap:12px;align-items:flex-start;padding:8px 0;position:relative}
+.ms-dot{width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;border:2px solid var(--white)}
+.ms-dot.done{background:var(--green)}
+.ms-dot.active{background:var(--copper)}
+.ms-dot.upcoming{background:var(--white);border-color:var(--border)}
+.ms-dot.end{background:var(--navy)}
+.ms-dot svg{width:10px;height:10px}
+.ms-content{flex:1;padding-top:2px}
+.ms-label{font-size:13px;font-weight:500;color:var(--ink);line-height:1.3}
+.ms-date{font-size:11px;color:var(--ink-3);margin-top:1px}
+.ms-tag{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;display:inline-block;margin-top:3px}
+.ms-tag.you{background:var(--amber-lt);color:var(--amber-dk)}
+.ms-tag.os{background:var(--blue-lt);color:var(--blue-dk)}
+.ms-tag.both{background:var(--green-lt);color:var(--green-dk)}
+.ms-tag.end-tag{background:#EEE;color:var(--ink-2)}
+
+/* ── SECTION LABELS ── */
+.sec-lbl{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:500;padding:8px 18px 5px;background:var(--cream);border-bottom:1px solid var(--border)}
+
+/* ── DOC / SCHEDULING ROWS ── */
+.item-row{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--border);transition:background .12s}
+.item-row:last-child{border-bottom:none}
+.item-row:hover{background:#fafaf8}
+.item-ic{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .3s}
+.ic-r{background:var(--green-lt)}
+.ic-p{background:var(--amber-lt)}
+.ic-s{background:var(--blue-lt)}
+.item-info{flex:1;min-width:0}
+.item-name{font-size:13px;color:var(--ink);line-height:1.3}
+.item-hint{font-size:11px;color:var(--ink-3);margin-top:1px;line-height:1.4}
+.item-acts{display:flex;align-items:center;gap:7px;flex-shrink:0}
+
+.pill{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;white-space:nowrap;transition:all .3s}
+.pill-r{background:var(--green-lt);color:var(--green-dk)}
+.pill-p{background:var(--amber-lt);color:var(--amber-dk)}
+.pill-s{background:var(--blue-lt);color:var(--blue-dk)}
+
+.act-btn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;color:var(--navy);background:#fff;border:1px solid var(--border);border-radius:var(--rs);padding:4px 9px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:border-color .12s,background .12s;font-family:'Source Sans 3',sans-serif}
+.act-btn:hover{border-color:var(--navy);background:var(--blue-lt)}
+.act-btn.hidden{display:none}
+.act-btn svg{width:10px;height:10px;flex-shrink:0}
+
+/* Logic model note */
+.lm-note{margin:0 18px 0;padding:8px 12px;background:var(--blue-lt);border-radius:var(--rs);font-size:12px;color:var(--blue-dk);line-height:1.5;border-bottom:1px solid var(--border)}
+.lm-note strong{font-weight:500}
+
+.doc-footer{padding:10px 18px;background:var(--cream);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.doc-footer-txt{font-size:12px;color:var(--ink-3)}
+.doc-footer-txt strong{color:var(--ink-2)}
+.refresh-btn{font-size:11px;color:var(--navy);background:none;border:none;cursor:pointer;font-weight:500;display:flex;align-items:center;gap:4px;font-family:'Source Sans 3',sans-serif}
+.refresh-btn svg{width:11px;height:11px}
+.spin{animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── UPDATES ── */
+.upd-list{display:flex;flex-direction:column}
+.upd-row{display:flex;gap:11px;padding:11px 18px;border-bottom:1px solid var(--border)}
+.upd-row:last-child{border-bottom:none}
+.upd-line{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:4px}
+.upd-dot{width:9px;height:9px;border-radius:50%}
+.ud-g{background:var(--green)}
+.ud-a{background:var(--copper)}
+.ud-n{background:var(--navy)}
+.ud-gray{background:#CCC}
+.upd-conn{width:1px;flex:1;min-height:16px;background:var(--border);margin-top:3px}
+.upd-row:last-child .upd-conn{display:none}
+.upd-msg{font-size:13px;color:var(--ink);line-height:1.5}
+.upd-date{font-size:11px;color:var(--ink-3);margin-top:2px}
+.upd-empty{padding:16px 18px;font-size:13px;color:var(--ink-3);font-style:italic}
+
+/* ── TOOLS ── */
+.tools-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;padding:14px;grid-auto-rows:1fr}
+.tool{border:1px solid var(--border);border-radius:var(--rs);padding:12px 13px;text-decoration:none;display:flex;flex-direction:column;gap:7px;background:#fff;transition:border-color .12s,box-shadow .12s;min-width:0;word-break:break-word}
+.tool:hover{border-color:var(--navy);box-shadow:0 2px 10px rgba(27,58,107,.07)}
+.t-name{font-size:13px;font-weight:500;color:var(--ink);line-height:1.3;word-break:break-word}
+.t-sub{font-size:11px;color:var(--ink-3);line-height:1.4;word-break:break-word}
+.t-dot{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.tc{background:#EBF3FC}.tg{background:#EAF3DE}.ta{background:var(--amber-lt)}.tm{background:var(--green-lt)}
+.t-cta{font-size:11px;color:var(--navy);font-weight:500;margin-top:auto;padding-top:4px}
+
+/* ── CONTACT ── */
+.contact-card{background:var(--navy);border-radius:var(--r);padding:18px 20px}
+.cc-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:10px}
+.cc-name{font-family:'Playfair Display',serif;font-size:17px;color:#fff;margin-bottom:2px}
+.cc-role{font-size:12px;color:rgba(255,255,255,.42);margin-bottom:12px}
+.cc-links{display:flex;flex-direction:column;gap:6px}
+.cc-link{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--copper);text-decoration:none}
+.cc-link:hover{color:#fff}
+.cc-link svg{width:13px;height:13px;opacity:.7;flex-shrink:0}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pillPop{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+.card,.contact-card{animation:fadeUp .38s ease both}
+.col-main .card:nth-child(1){animation-delay:.04s}
+.col-main .card:nth-child(2){animation-delay:.08s}
+.col-main .card:nth-child(3){animation-delay:.12s}
+.col-main .card:nth-child(4){animation-delay:.16s}
+.col-side>*:nth-child(1){animation-delay:.08s}
+.col-side>*:nth-child(2){animation-delay:.12s}
+.col-side>*:nth-child(3){animation-delay:.16s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:680px){
+  .page-body{grid-template-columns:1fr;padding:20px 14px 56px}
+  .hero{padding:32px 18px 40px}
+  .site-header{padding:0 18px}
+  .tools-grid{grid-template-columns:1fr 1fr}
+  .phases{grid-template-columns:repeat(5,1fr)}
+  .ph-name{font-size:9px}
+}
+
+/* ── FOOTER ── */
+footer{background:var(--navy);text-align:center;padding:22px;font-size:12px;color:rgba(255,255,255,.32)}
+footer a{color:rgba(255,255,255,.45);text-decoration:none}
+.last-updated{font-size:11px;color:rgba(255,255,255,.25);margin-top:4px}
+</style>
+</head>
+<body>
+
+<script>
+/* ============================================================
+   ★ ENGAGEMENT CONFIGURATION
+   Edit this block for each new client engagement.
+   Everything else is automatic.
+
+   PER-CLIENT SETUP CHECKLIST:
+   1. Duplicate the Google Sheet template → rename for this client
+   2. Reconnect each Google Form to its tab in the new sheet
+   3. Paste the new Apps Script code → deploy as Web App → copy URL
+   4. Fill in all CAPS_PLACEHOLDER values below
+   5. Upload this file to organizedsynergy.com/clients/[client-slug]
+   6. Share the URL in the kick-off email
+
+   GOOGLE SHEET STRUCTURE (one sheet per client):
+   • One tab per document/form (auto-named when form connects)
+   • One tab named "Updates" — columns: date | message | type
+     Types: milestone | reminder | info | note
+     Add rows newest-first; portal pulls automatically.
+   ============================================================ */
+const ENGAGEMENT = {
+
+  clientName:     "Horizon Prison Initiative",
+  contactName:    "Renee Wormack-Keels",
+  engagementType: "Fundraising Support",
+
+  contractBegin:  "2026-04-17",
+  contractEnd:    "2026-06-12",
+
+  phases: [
+    { label: "Document Collection & Scheduling",          status: "active" },
+    { label: "Working Sessions & Stakeholder Interviews", status: "todo"   },
+    { label: "Working on Deliverables",                   status: "todo"   },
+    { label: "Client Review & Feedback",                  status: "todo"   },
+    { label: "Delivered",                                 status: "todo"   },
+  ],
+
+  progressPct: 10,
+
+  milestones: [
+    { label: "Contract signed",          date: "April 13, 2026",       autoDate: "2026-04-13", status: "done",     tag: "both" },
+    { label: "Documents due",            date: "April 21, 2026",       autoDate: "2026-04-21", status: "active",   tag: "you"  },
+    { label: "Working session",          date: "April 28 – May 4",     autoDate: "2026-05-04", status: "upcoming", tag: "both" },
+    { label: "Preliminary review",       date: "May 11 – 19, 2026",    autoDate: "2026-05-19", status: "upcoming", tag: "both" },
+    { label: "Final delivery + invoice", date: "May 27, 2026",         autoDate: "2026-05-27", status: "upcoming", tag: "os",
+      note: "Looking for your final deliverables? Find them in the Project Google Drive link in your Tools & Links section." },
+    { label: "Engagement end",           date: "June 12, 2026",        autoDate: "2026-06-12", status: "end",      tag: "end"  },
+  ],
+
+  calendlyApiKey: "PASTE_YOUR_CALENDLY_API_KEY_HERE",
+  clientDomain:   "horizonprisoninitiative.org",
+  calendlyEvents: {
+    working_session: "WORKING_SESSION_EVENT_URI",
+    prelim_review:   "PRELIM_REVIEW_EVENT_URI",
+  },
+
+  appsScriptUrl: "PASTE_YOUR_APPS_SCRIPT_URL_HERE",
+
+  refreshInterval: 30000,
+
+  tools: [
+    { label: "Project Google Drive",  sub: "Shared docs & deliverables", cta: "Open folder →",   href: "PASTE_GOOGLE_DRIVE_FOLDER_LINK",                                                                          dot: "tg", icon: "drive" },
+    { label: "Logic model generator", sub: "Access the form here",       cta: "Open form →",     href: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform", dot: "ta", icon: "form"  },
+    { label: "Schedule a touchbase",  sub: "Questions or check-ins",     cta: "Open Calendly →", href: "PASTE_TOUCHBASE_CALENDLY_LINK",                                                                           dot: "tc", icon: "cal"   },
+    { label: "",                      sub: "",                            cta: "",                href: "",                                                                                                         dot: "",   icon: "blank" },
+  ],
+
+  closedMessage: {
+    heading: "This engagement is now complete.",
+    body:    "Thank you for working with us, Horizon Prison Initiative. If you're ready to take the next step in your fundraising journey — we'd love to continue the work together.",
+    cta:     "Reach Jennifer at <a href='mailto:jennifer@organizedsynergy.com'>jennifer@organizedsynergy.com</a> or <a href='tel:6143296858'>(614) 329-6858</a>.",
+  },
+};
+
+const ITEMS = [
+
+  /* ── ORGANIZATION DOCUMENTS ── */
+  { key: "form_990",       label: "IRS Form 990",                    hint: "Most recent year filed",                                                                    cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
+  { key: "annual_report",  label: "Annual report",                   hint: "Most recent available — 2024 or 2023",                                                      cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
+  { key: "org_budget",     label: "Organization operating budget",   hint: "2026 full organization budget",                                                             cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
+  { key: "program_budgets",label: "Program budget(s)",               hint: "Upload one per program — you can submit this form multiple times",                          cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE", multiSubmit: true },
+  { key: "grant_largest",  label: "Largest grant application",       hint: "Your largest grant — any year",                                                             cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
+  { key: "grant_recent_1", label: "Most recent grant application",   hint: "Most recently submitted — approved or declined",                                            cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
+  { key: "grant_recent_2", label: "Second most recent grant",        hint: "Second most recently submitted — approved or declined",                                     cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
+  { key: "marketing",      label: "Marketing materials",             hint: "Brochures, one-pagers, website screenshots, etc. — you can submit this form multiple times", cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE", multiSubmit: true },
+
+  /* ── STAKEHOLDER LIST ── */
+  { key: "stakeholders", label: "Stakeholder identification", hint: "Add the people we should speak with — board members, program staff, or community partners", cat: "Stakeholders", type: "stakeholder" },
+
+  /* ── LOGIC MODEL GENERATOR ── */
+  { key: "lm_ed",  label: "Logic model — Renee Wormack-Keels (Executive Director)", hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform", isLM: true },
+  { key: "lm_pd1", label: "Logic model — Program Director, Site 1",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform", isLM: true },
+  { key: "lm_pd2", label: "Logic model — Program Director, Site 2",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform", isLM: true },
+
+  /* ── SCHEDULING ── */
+  { key: "sched_working", label: "Working session",    hint: "2 hours · April 28 – May 4",  cat: "Scheduling", type: "scheduling", calendlyEventKey: "working_session", scheduleUrl: "PASTE_WORKING_SESSION_CALENDLY_LINK" },
+  { key: "sched_prelim",  label: "Preliminary review", hint: "45 minutes · May 11 – 19",    cat: "Scheduling", type: "scheduling", calendlyEventKey: "prelim_review",   scheduleUrl: "PASTE_PRELIM_REVIEW_CALENDLY_LINK"  },
+
+];
+</script>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo">Organized <span>Synergy</span></div>
+  <div class="header-tag">Client Portal</div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="engagement-badge active" id="eng-badge">
+    <div class="pulse" id="eng-pulse"></div>
+    <span class="badge-text active" id="eng-badge-text">Active engagement</span>
+  </div>
+  <h1>Welcome, <em id="hero-name">[Client Organization Name].</em></h1>
+  <p class="hero-sub">Everything for your engagement is right here. No hunting through emails.</p>
+  <div class="hero-meta">
+    <div class="mp"><span class="lbl">Engagement</span><span class="val" id="meta-type"></span></div>
+    <div class="mp"><span class="lbl">Contract begin</span><span class="val" id="meta-begin"></span></div>
+    <div class="mp"><span class="lbl">Contract end</span><span class="val" id="meta-end"></span></div>
+    <div class="mp"><span class="lbl">Your lead</span><span class="val">Jennifer McKenzie</span></div>
+  </div>
+  <div class="closed-message" id="closed-msg">
+    <h3 id="closed-heading"></h3>
+    <p id="closed-body"></p>
+    <p style="margin-top:8px;font-size:13px" id="closed-cta"></p>
+  </div>
+</section>
+
+<!-- MAIN BODY -->
+<div class="page-body">
+<div class="col-main">
+
+  <!-- START HERE -->
+  <div class="card" id="start-here-card">
+    <div class="card-head">
+      <h2>Start here</h2>
+      <span class="pill pill-p" id="start-sum-pill">Loading…</span>
+    </div>
+    <div id="start-here-list"></div>
+    <div style="padding:12px 18px;background:var(--cream);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="var(--ink-3)" stroke-width="1.1"/><line x1="6.5" y1="4" x2="6.5" y2="7.2" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round"/><circle cx="6.5" cy="9" r=".7" fill="var(--ink-3)"/></svg>
+      <span style="font-size:12px;color:var(--ink-3)">Stuck on something? <a href="PASTE_TOUCHBASE_CALENDLY_LINK" target="_blank" style="color:var(--copper);text-decoration:none;font-weight:500">Book a quick 15-min check-in →</a></span>
+    </div>
+  </div>
+
+  <!-- DOCUMENTS & SCHEDULING -->
+  <div class="card">
+    <div class="card-head">
+      <h2>Documents & scheduling</h2>
+      <span class="pill pill-p" id="doc-sum-pill">Checking…</span>
+    </div>
+    <div id="item-list">
+      <div style="padding:20px 18px;font-size:13px;color:var(--ink-3)">Loading…</div>
+    </div>
+    <div class="doc-footer">
+      <div class="doc-footer-txt" id="doc-sum-text">Loading status…</div>
+      <button class="refresh-btn" id="refresh-btn" onclick="loadAllStatus()">
+        <svg id="refresh-icon" viewBox="0 0 12 12" fill="none" width="11" height="11"><path d="M10.5 6A4.5 4.5 0 112.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M2.5 1.5v2h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- WHAT HAPPENS NEXT -->
+  <div class="card" id="what-next-card">
+    <div class="card-head"><h2>What happens next</h2></div>
+    <div id="what-next-list"></div>
+  </div>
+
+  <!-- MILESTONE CALENDAR -->
+  <div class="card">
+    <div class="card-head"><h2>Key dates & milestones</h2></div>
+    <div class="card-body">
+      <div class="milestone-track" id="milestone-track">
+        <div class="milestone-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPDATES -->
+  <div class="card">
+    <div class="card-head"><h2>Updates from Organized Synergy</h2></div>
+    <div id="updates-list">
+      <div class="upd-empty">Updates will appear here as your engagement progresses.</div>
+    </div>
+    <div style="padding:10px 18px;background:var(--cream);border-top:1px solid var(--border)">
+      <div style="font-size:11px;color:var(--ink-3)" id="updates-timestamp"></div>
+    </div>
+  </div>
+
+</div><!-- /col-main -->
+
+<div class="col-side">
+
+  <!-- CONTACT -->
+  <div class="contact-card">
+    <div class="cc-lbl">Your Organized Synergy lead</div>
+    <div class="cc-name">Jennifer McKenzie</div>
+    <div class="cc-role">Managing Partner, MOD</div>
+    <div class="cc-links">
+      <a href="mailto:jennifer@organizedsynergy.com" class="cc-link">
+        <svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="3" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 5l5.5 3.5L12.5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        jennifer@organizedsynergy.com
+      </a>
+      <a href="tel:6143296858" class="cc-link">
+        <svg viewBox="0 0 14 14" fill="none"><path d="M3 2h2.5l1 2.5-1.5 1a7 7 0 003.5 3.5l1-1.5L12 8.5V11a1 1 0 01-1 1A9 9 0 012 3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        (614) 329-6858
+      </a>
+    </div>
+  </div>
+
+  <!-- PROGRESS — sidebar tracker -->
+  <div class="card">
+    <div class="card-head"><h2>Project progress</h2></div>
+    <div class="card-body">
+      <div class="prog-summary">
+        <div class="prog-pct" id="prog-pct">—</div>
+        <div class="prog-desc" id="prog-desc">Loading…</div>
+      </div>
+      <div class="phases" id="phases-row"></div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="card">
+    <div class="card-head"><h2>Tools & links</h2></div>
+    <div class="tools-grid" id="tools-grid"></div>
+  </div>
+
+</div><!-- /col-side -->
+</div><!-- /page-body -->
+
+<footer>
+  <p>© 2026 Organized Synergy, LLC &nbsp;·&nbsp; <a href="mailto:jennifer@organizedsynergy.com">jennifer@organizedsynergy.com</a> &nbsp;·&nbsp; Confidential client portal</p>
+  <div class="last-updated" id="last-updated-footer"></div>
+</footer>
+
+<!-- ============================================================
+     PORTAL ENGINE
+     ============================================================ -->
+<script>
+/* SVG icons */
+const ICONS = {
+  check: `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 4.5,8.5 10,3" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  warn:  `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#BA7517" stroke-width="1.1"/><line x1="6" y1="3.8" x2="6" y2="6.5" stroke="#BA7517" stroke-width="1.3" stroke-linecap="round"/><circle cx="6" cy="8.2" r=".65" fill="#BA7517"/></svg>`,
+  cal:   `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="2" width="10" height="9" rx="1.5" stroke="#185FA5" stroke-width="1.1"/><line x1="4" y1=".8" x2="4" y2="3.2" stroke="#185FA5" stroke-width="1.1" stroke-linecap="round"/><line x1="8" y1=".8" x2="8" y2="3.2" stroke="#185FA5" stroke-width="1.1" stroke-linecap="round"/><line x1="1" y1="5" x2="11" y2="5" stroke="#185FA5" stroke-width="1.1"/></svg>`,
+  up:    `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 7.5V2.5M5 2.5L2.5 5M5 2.5L7.5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1.5 8.5h7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+  sched: `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x=".8" y="1.5" width="8.4" height="7.5" rx="1.2" stroke="#185FA5" stroke-width="1.1"/><line x1="3" y1=".3" x2="3" y2="2.7" stroke="#185FA5" stroke-width="1.1" stroke-linecap="round"/><line x1="7" y1=".3" x2="7" y2="2.7" stroke="#185FA5" stroke-width="1.1" stroke-linecap="round"/><line x1=".8" y1="4" x2="9.2" y2="4" stroke="#185FA5" stroke-width="1.1"/></svg>`,
+  drive: `<svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2L14 13H2L8 2Z" stroke="#3B6D11" stroke-width="1.2" stroke-linejoin="round"/><path d="M2 13L5.5 7" stroke="#3B6D11" stroke-width="1.2" stroke-linecap="round"/><path d="M14 13L10.5 7" stroke="#3B6D11" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+  form:  `<svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#854F0B" stroke-width="1.2"/><line x1="5" y1="6" x2="11" y2="6" stroke="#854F0B" stroke-width="1.2" stroke-linecap="round"/><line x1="5" y1="9" x2="9" y2="9" stroke="#854F0B" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+  email: `<svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="1.5" stroke="#085041" stroke-width="1.2"/><path d="M2 6.5l6 3.5 6-3.5" stroke="#085041" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+  calTool:`<svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#185FA5" stroke-width="1.2"/><line x1="5" y1="1.5" x2="5" y2="4.5" stroke="#185FA5" stroke-width="1.2" stroke-linecap="round"/><line x1="11" y1="1.5" x2="11" y2="4.5" stroke="#185FA5" stroke-width="1.2" stroke-linecap="round"/><line x1="2" y1="7" x2="14" y2="7" stroke="#185FA5" stroke-width="1.2"/></svg>`,
+};
+
+let itemStatus = {};
+let refreshTimer = null;
+let isClosed = false;
+
+/* ── FORMAT DATE ── */
+function fmtDate(iso) {
+  const d = new Date(iso + 'T12:00:00');
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+/* ── CHECK ENGAGEMENT CLOSED ── */
+function checkClosed() {
+  const end = new Date(ENGAGEMENT.contractEnd + 'T23:59:59');
+  isClosed = new Date() > end;
+
+  if (isClosed) {
+    document.getElementById('eng-badge').className = 'engagement-badge closed';
+    document.getElementById('eng-pulse').className = 'pulse closed-dot';
+    document.getElementById('eng-badge-text').className = 'badge-text closed';
+    document.getElementById('eng-badge-text').textContent = 'Closed engagement';
+    const cm = document.getElementById('closed-msg');
+    cm.classList.add('show');
+    document.getElementById('closed-heading').textContent = ENGAGEMENT.closedMessage.heading;
+    document.getElementById('closed-body').textContent = ENGAGEMENT.closedMessage.body;
+    document.getElementById('closed-cta').innerHTML = ENGAGEMENT.closedMessage.cta;
+  }
+}
+
+/* ── AUTO-ADVANCE PHASES FROM MILESTONE DATES ── */
+function computePhases() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  function mDate(keyword) {
+    const m = ENGAGEMENT.milestones.find(x => x.label.toLowerCase().includes(keyword) && x.autoDate);
+    if (!m) return null;
+    const d = new Date(m.autoDate + 'T00:00:00');
+    return isNaN(d) ? null : d;
+  }
+  const phases = ENGAGEMENT.phases.map(p => ({ ...p }));
+  const dates = [
+    mDate('document'), mDate('working session'),
+    mDate('preliminary'), mDate('final delivery'), mDate('engagement end')
+  ];
+  dates.forEach((d, i) => { if (d && today > d && phases[i]) phases[i].status = 'done'; });
+  let foundActive = false;
+  phases.forEach(p => {
+    if (p.status !== 'done' && !foundActive) { p.status = 'active'; foundActive = true; }
+    else if (p.status !== 'done') p.status = 'todo';
+  });
+  return phases;
+}
+
+/* ── RENDER START HERE ── */
+function renderStartHere(phases) {
+  const sl = document.getElementById('start-here-list');
+  if (!sl) return;
+  const chk = `<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><polyline points="2,6.5 5,9.5 11,3" stroke="#085041" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  const docItems   = ITEMS.filter(i => i.type === 'doc' && !i.isLM);
+  const lmItems    = ITEMS.filter(i => i.isLM);
+  const schedItems = ITEMS.filter(i => i.type === 'scheduling');
+  const docDone    = docItems.length === 0 || docItems.every(i => itemStatus[i.key] === 'received');
+  const lmDone     = lmItems.length === 0   || lmItems.every(i => itemStatus[i.key] === 'received');
+  const schedDone  = schedItems.length === 0 || schedItems.every(i => itemStatus[i.key] === 'received');
+  const lmCount    = lmItems.filter(i => itemStatus[i.key] === 'received').length;
+  const activePhaseIdx = phases.findIndex(p => p.status === 'active');
+  const inReview   = activePhaseIdx === 3;
+
+  const steps = [
+    { num: 1, done: docDone,   label: "Upload your organization documents", why: "Helps us understand your current state and funding history",          time: "15–20 min",      sub: docDone ? "All documents received — thank you!" : "Use the upload buttons in Documents & Scheduling below" },
+    { num: 2, done: lmDone,    label: "Complete the logic model generator",  why: "Clarifies your program design in the language funders use",            time: "20–30 min each", sub: lmDone ? "All logic models received — thank you!" : `${lmCount} of ${lmItems.length} submitted · Access the form in Tools & Links` },
+    { num: 3, done: schedDone, label: "Schedule your sessions",              why: "Sets the pace and keeps the engagement on track",                      time: "5 min",          sub: schedDone ? "All sessions scheduled" : "Use the Schedule buttons in Documents & Scheduling below" },
+    { num: 4, done: false,     label: "Identify your stakeholders",          why: "Ensures we capture real perspectives from people closest to the work", time: "10 min",         sub: `See the stakeholder row in Documents & Scheduling below · You'll receive a separate email about introductions` },
+  ];
+
+  if (inReview) steps.push({
+    num: 5, done: false, label: "Share your feedback on final deliverables",
+    why: "Your input ensures the deliverables reflect your voice and priorities",
+    time: "30–45 min", sub: "Please reply to Jennifer's email with your notes and questions"
+  });
+
+  const doneCount = steps.filter(s => s.done).length;
+  let html = '';
+  steps.forEach((s, idx) => {
+    const isLast = idx === steps.length - 1;
+    html += `<div style="display:flex;gap:14px;padding:14px 18px;border-bottom:${isLast?'none':'1px solid var(--border)'}">
+      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0">
+        <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;background:${s.done?'var(--green-lt)':'var(--navy)'};color:${s.done?'#085041':'#fff'};flex-shrink:0">${s.done?chk:s.num}</div>
+        ${!isLast?`<div style="width:1px;flex:1;min-height:16px;background:var(--border);margin-top:4px"></div>`:''}
+      </div>
+      <div style="flex:1;padding-top:4px">
+        <div style="font-size:14px;font-weight:500;color:${s.done?'var(--ink-3)':'var(--ink)'};${s.done?'text-decoration:line-through':''}line-height:1.3;margin-bottom:3px">${s.label}</div>
+        <div style="font-size:12px;color:var(--copper);font-style:italic;margin-bottom:4px">${s.why}</div>
+        <div style="font-size:12px;color:var(--ink-3);line-height:1.5">${s.sub}</div>
+        <div style="display:inline-flex;align-items:center;gap:4px;margin-top:5px;background:var(--cream);border-radius:20px;padding:2px 8px">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="var(--ink-3)" stroke-width="1"/><path d="M5 3v2.5l1.5 1" stroke="var(--ink-3)" stroke-width="1" stroke-linecap="round"/></svg>
+          <span style="font-size:11px;color:var(--ink-3)">${s.time}</span>
+        </div>
+      </div>
+      <div style="flex-shrink:0;padding-top:4px"><span style="font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap;background:${s.done?'var(--green-lt)':'var(--amber-lt)'};color:${s.done?'#085041':'#633806'}">${s.done?'Complete':'To do'}</span></div>
+    </div>`;
+  });
+
+  sl.innerHTML = html;
+  const sp = document.getElementById('start-sum-pill');
+  if (sp) { const r = steps.length - doneCount; sp.className = r===0?'pill pill-r':'pill pill-p'; sp.textContent = r===0?'All complete':`${r} to do`; }
+}
+
+/* ── RENDER WHAT HAPPENS NEXT ── */
+function renderWhatNext(phases) {
+  const wl = document.getElementById('what-next-list');
+  if (!wl) return;
+  const activeIdx = phases.findIndex(p => p.status === 'active');
+  const allSteps = [
+    [{ icon: "📋", label: "We review your documents",         detail: "Within 3 business days of receipt we'll review everything and reach out with any clarifying questions." },
+     { icon: "📅", label: "We conduct stakeholder interviews", detail: "We'll reach out to each person you identified to schedule a 45-minute conversation." },
+     { icon: "🗂",  label: "We prepare for your working session", detail: "We synthesize your documents and logic model responses to build the working session agenda." }],
+    [{ icon: "🔬", label: "We synthesize insights",   detail: "Interview findings, document review, and working session notes are analyzed together." },
+     { icon: "✏️", label: "We draft your deliverables", detail: "All four deliverables are drafted in parallel — funder research, logic model, case for support, and 90-day plan." }],
+    [{ icon: "📬", label: "We send your preliminary draft", detail: "You'll receive a draft package 48 hours before your scheduled review session." },
+     { icon: "🔄", label: "We incorporate your feedback",   detail: "Within 5 business days of your review session we'll finalize all four deliverables." }],
+    [{ icon: "📦", label: "We deliver your final package", detail: "All four deliverables are delivered along with your final invoice." },
+     { icon: "📞", label: "We follow up",                  detail: "Jennifer will reach out 5–7 days after delivery to check in and discuss next steps." }],
+  ];
+  const items = allSteps[Math.min(activeIdx, allSteps.length - 1)] || allSteps[0];
+  wl.innerHTML = items.map((item, idx) => `
+    <div style="display:flex;gap:12px;padding:13px 18px;border-bottom:${idx===items.length-1?'none':'1px solid var(--border)'}">
+      <div style="width:32px;height:32px;border-radius:8px;background:var(--blue-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px">${item.icon}</div>
+      <div><div style="font-size:13px;font-weight:500;color:var(--navy);margin-bottom:2px">${item.label}</div>
+      <div style="font-size:12px;color:var(--ink-3);line-height:1.5">${item.detail}</div></div>
+    </div>`).join('');
+}
+
+/* ── RENDER KEY DATES sidebar ── */
+function renderKeyDates() {
+  const kl = document.getElementById('key-dates-list');
+  if (!kl) return;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const tagStyle = { you: ['var(--amber-lt)','#633806','You'], os: ['var(--blue-lt)','#0C447C','OS'], both: ['var(--green-lt)','#085041','Both'], end: ['#EEE','var(--ink-2)','End'] };
+  const visible = ENGAGEMENT.milestones.filter(m => m.tag !== 'end' && m.status !== 'end');
+  kl.innerHTML = visible.map((m, idx) => {
+    const past = m.autoDate ? today > new Date(m.autoDate + 'T00:00:00') : false;
+    const [bg, color, label] = tagStyle[m.tag] || tagStyle.both;
+    return `<div style="display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:${idx===visible.length-1?'none':'1px solid var(--border)'}">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;color:${past?'var(--ink-3)':'var(--ink)'};${past?'text-decoration:line-through':''};line-height:1.3">${m.label}</div>
+        <div style="font-size:11px;color:var(--ink-3);margin-top:1px">${m.date}</div>
+      </div>
+      <span style="font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;background:${bg};color:${color};flex-shrink:0">${label}</span>
+    </div>`;
+  }).join('') || '<div style="padding:14px 16px;font-size:13px;color:var(--ink-3)">No dates configured yet.</div>';
+}
+
+/* ── POPULATE STATIC CONTENT ── */
+function populateStatic() {
+  document.getElementById('hero-name').textContent = ENGAGEMENT.clientName + '.';
+  document.getElementById('meta-type').textContent  = ENGAGEMENT.engagementType;
+  document.getElementById('meta-begin').textContent = fmtDate(ENGAGEMENT.contractBegin);
+  document.getElementById('meta-end').textContent   = fmtDate(ENGAGEMENT.contractEnd);
+
+  /* Auto-compute phases */
+  const phases = computePhases();
+  const doneCount  = phases.filter(p => p.status === 'done').length;
+  const activePhase = phases.find(p => p.status === 'active') || phases[phases.length - 1];
+  const pct = Math.round((doneCount / phases.length) * 100);
+
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-desc').innerHTML  = `Phase ${Math.min(doneCount + 1, phases.length)} of ${phases.length}<br>${activePhase.label}`;
+
+  /* Phase bars */
+  const pr = document.getElementById('phases-row');
+  pr.innerHTML = '';
+  phases.forEach(p => {
+    pr.innerHTML += `<div class="ph"><div class="ph-bar"><div class="ph-fill ${p.status}"></div></div><div class="ph-name ${p.status}">${p.label}</div></div>`;
+  });
+
+  /* Milestones — auto-check based on autoDate */
+  const mt = document.getElementById('milestone-track');
+  mt.innerHTML = '<div class="milestone-line"></div>';
+  const today = new Date(); today.setHours(0,0,0,0);
+  const tagMap   = { you: 'you', os: 'os', both: 'both', end: 'end-tag' };
+  const tagLabel = { you: 'You', os: 'OS', both: 'Both', end: 'End date' };
+  ENGAGEMENT.milestones.forEach(m => {
+    let status = m.status;
+    if (m.autoDate && m.status !== 'end') {
+      const d = new Date(m.autoDate + 'T00:00:00');
+      if (!isNaN(d)) status = today > d ? 'done' : m.status;
+    }
+    let dotClass = 'upcoming';
+    let dotInner = `<div style="width:7px;height:7px;border-radius:50%;background:var(--border)"></div>`;
+    if (status === 'done')   { dotClass = 'done';   dotInner = `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
+    if (status === 'active') { dotClass = 'active'; dotInner = `<div style="width:7px;height:7px;border-radius:50%;background:#fff"></div>`; }
+    if (status === 'end')    { dotClass = 'end';    dotInner = `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><line x1="5" y1="1" x2="5" y2="9" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="9" x2="8" y2="9" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>`; }
+    mt.innerHTML += `
+      <div class="milestone-item">
+        <div class="ms-dot ${dotClass}">${dotInner}</div>
+        <div class="ms-content">
+          <div class="ms-label">${m.label}</div>
+          <div class="ms-date">${m.date}</div>
+          <span class="ms-tag ${tagMap[m.tag]}">${tagLabel[m.tag]}</span>
+          ${m.note ? `<div style="font-size:11px;color:var(--ink-3);margin-top:5px;line-height:1.5">${m.note}</div>` : ''}
+        </div>
+      </div>`;
+  });
+
+  /* Tools */
+  const tg = document.getElementById('tools-grid');
+  const iconMap = { drive: ICONS.drive, form: ICONS.form, cal: ICONS.calTool, email: ICONS.email };
+  ENGAGEMENT.tools.forEach(t => {
+    if (t.icon === 'blank') {
+      tg.innerHTML += `<div class="tool tool-blank" style="background:var(--navy);border-color:var(--navy);cursor:default" aria-hidden="true"></div>`;
+      return;
+    }
+    tg.innerHTML += `<a href="${t.href}" target="_blank" class="tool"><div class="t-dot ${t.dot}">${iconMap[t.icon]||''}</div><div class="t-name">${t.label}</div><div class="t-sub">${t.sub}</div><div class="t-cta">${t.cta}</div></a>`;
+  });
+
+  renderStartHere(phases);
+  renderWhatNext(phases);
+
+}
+
+/* ── RENDER ITEMS ── */
+function renderItems() {
+  const list = document.getElementById('item-list');
+  let html = '';
+  let currentCat = null;
+  let received = 0;
+  let total = ITEMS.length;
+  let lmNoteShown = false;
+
+  ITEMS.forEach(item => {
+    if (item.cat !== currentCat) {
+      currentCat = item.cat;
+      html += `<div class="sec-lbl">${item.cat}</div>`;
+      if (item.cat === 'Logic model generator' && !lmNoteShown) {
+        lmNoteShown = true;
+        html += `<div class="lm-note"><strong>How it works:</strong> Access the logic model generator using the "Logic model generator" link in your <strong>Tools &amp; Links</strong> section. After submitting, you will automatically receive a completed copy of your document via email from <strong>jsarahscott132@gmail.com</strong> — check your spam folder if you don't see it within a few minutes. Once received, upload that document using the upload button on the row below.</div>`;
+      }
+    }
+
+    /* ── STAKEHOLDER ITEM — renders inline form ── */
+    if (item.type === 'stakeholder') {
+      const count = typeof itemStatus[item.key] === 'number' ? itemStatus[item.key] : (itemStatus[item.key] === 'received' ? 1 : 0);
+      if (count > 0) received++;
+      const pillCls = count > 0 ? 'pill pill-r' : 'pill pill-p';
+      const pillTxt = count > 0 ? `${count} identified` : 'Outstanding';
+      html += `
+        <div class="item-row" id="row-${item.key}" style="flex-direction:column;align-items:stretch;gap:0;padding:0">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 18px">
+            <div class="item-ic ${count > 0 ? 'ic-r' : 'ic-p'}" id="ic-${item.key}">${count > 0 ? ICONS.check : ICONS.warn}</div>
+            <div class="item-info">
+              <div class="item-name">${item.label}</div>
+              <div class="item-hint">${item.hint}</div>
+            </div>
+            <div class="item-acts">
+              <span class="${pillCls}" id="pill-${item.key}" ${count > 0 ? 'onclick="toggleStakeholderForm(true)" style="cursor:pointer;text-decoration:underline dotted"' : ''}>${pillTxt}</span>
+              <button class="act-btn" onclick="toggleStakeholderForm(false)" id="sh-toggle-btn">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2v6M2 5h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                Add people
+              </button>
+            </div>
+          </div>
+          <div id="sh-form-panel" style="display:none;border-top:1px solid var(--border);background:var(--cream);padding:14px 18px">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:8px;margin-bottom:8px">
+              <input id="sh-name"  type="text"  placeholder="Full name"        style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
+              <input id="sh-role"  type="text"  placeholder="Title / role"     style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
+              <input id="sh-email" type="email" placeholder="Email address"    style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
+              <select id="sh-relationship" style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
+                <option value="">Relationship…</option>
+                <option>Board member</option>
+                <option>Staff member</option>
+                <option>Contractor/Consultant</option>
+                <option>Community partner</option>
+                <option>Funder</option>
+                <option>Other</option>
+              </select>
+              <button onclick="addStakeholder()" class="act-btn" style="background:var(--navy);color:#fff;border-color:var(--navy);white-space:nowrap">+ Add</button>
+            </div>
+            <div id="sh-list" style="display:flex;flex-direction:column;gap:4px;margin-bottom:10px"></div>
+            <div id="sh-submitted-list" style="display:none;margin-bottom:10px;padding-top:10px;border-top:1px solid var(--border)"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span id="sh-status-msg" style="font-size:12px;color:var(--ink-3)"></span>
+              <button id="sh-done-btn" onclick="doneAddingStakeholders()" class="act-btn" style="background:var(--copper);color:#fff;border-color:var(--copper);display:none">
+                Done — close form
+              </button>
+            </div>
+          </div>
+        </div>`;
+      return;
+    }
+
+    /* ── STANDARD ITEMS ── */
+    const statusVal  = itemStatus[item.key];
+    const count      = typeof statusVal === 'number' ? statusVal : (statusVal === 'received' ? 1 : 0);
+    const isReceived = count > 0;
+    const isMulti    = item.multiSubmit === true;
+    if (isReceived) received++;
+
+    const icClass  = item.type === 'scheduling' ? (isReceived ? 'ic-r' : 'ic-s') : (isReceived ? 'ic-r' : 'ic-p');
+    const icInner  = isReceived ? ICONS.check : (item.type === 'scheduling' ? ICONS.cal : ICONS.warn);
+
+    let pillCls, pillTxt;
+    if (item.type === 'scheduling') {
+      pillCls = isReceived ? 'pill pill-r' : 'pill pill-s';
+      pillTxt = isReceived ? 'Scheduled' : 'Not scheduled';
+    } else if (isMulti && isReceived) {
+      pillCls = 'pill pill-r';
+      pillTxt = count === 1 ? '1 submitted' : `${count} submitted`;
+    } else {
+      pillCls = isReceived ? 'pill pill-r' : 'pill pill-p';
+      pillTxt = isReceived ? 'Received' : 'Outstanding';
+    }
+
+    const btnUrl   = item.type === 'scheduling' ? item.scheduleUrl : item.formUrl;
+    const btnLabel = item.type === 'scheduling' ? `${ICONS.sched} Schedule` : `${ICONS.up} Upload`;
+    const hideBtn  = isReceived && !isMulti && item.type !== 'scheduling';
+
+    html += `
+      <div class="item-row" id="row-${item.key}">
+        <div class="item-ic ${icClass}" id="ic-${item.key}">${icInner}</div>
+        <div class="item-info">
+          <div class="item-name">${item.label}</div>
+          <div class="item-hint">${item.hint}</div>
+        </div>
+        <div class="item-acts">
+          <span class="${pillCls}" id="pill-${item.key}">${pillTxt}</span>
+          <a href="${btnUrl}" target="_blank" class="act-btn${hideBtn ? ' hidden' : ''}" id="btn-${item.key}"
+             onclick="handleItemClick('${item.key}', '${item.type}')">${btnLabel}</a>
+        </div>
+      </div>`;
+  });
+
+  list.innerHTML = html;
+
+  /* Summary */
+  const outstanding = total - received;
+  const sp = document.getElementById('doc-sum-pill');
+  const st = document.getElementById('doc-sum-text');
+  sp.className = outstanding === 0 ? 'pill pill-r' : 'pill pill-p';
+  sp.textContent = outstanding === 0 ? 'All complete' : `${outstanding} outstanding`;
+  st.innerHTML = outstanding === 0
+    ? '<strong>Everything received.</strong> Thank you!'
+    : `<strong>${received} of ${total}</strong> items complete`;
+
+  const ph = computePhases();
+  renderStartHere(ph);
+  renderWhatNext(ph);
+}
+
+/* ── STAKEHOLDER FORM LOGIC ── */
+let stakeholderList = [];
+let submittedStakeholders = []; /* Loaded from sheet when pill is clicked */
+
+async function toggleStakeholderForm(showSubmitted = false) {
+  const panel = document.getElementById('sh-form-panel');
+  const btn   = document.getElementById('sh-toggle-btn');
+  if (!panel) return;
+  const open  = panel.style.display === 'none';
+  panel.style.display = open ? 'block' : 'none';
+  btn.innerHTML = open
+    ? `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Add people`
+    : `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2v6M2 5h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Add people`;
+
+  /* If opened by clicking the pill, load previously submitted entries */
+  if (open && showSubmitted) {
+    const msg = document.getElementById('sh-status-msg');
+    if (msg) msg.textContent = 'Loading submitted entries…';
+    const entries = await fetchStakeholders();
+    submittedStakeholders = entries;
+    if (msg) msg.textContent = '';
+    renderSubmittedStakeholders();
+  }
+}
+
+async function fetchStakeholders() {
+  if (ENGAGEMENT.appsScriptUrl === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') return [];
+  try {
+    const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?action=getStakeholders', { mode: 'cors' });
+    const data = await res.json();
+    return data.stakeholders || [];
+  } catch(e) { return []; }
+}
+
+function renderSubmittedStakeholders() {
+  const sl = document.getElementById('sh-submitted-list');
+  if (!sl) return;
+  if (submittedStakeholders.length === 0) { sl.style.display = 'none'; return; }
+  const relLabel = { 'Board member': 'Board', 'Staff member': 'Staff', 'Contractor/Consultant': 'Contractor', 'Community partner': 'Community', 'Funder': 'Funder', 'Other': 'Other' };
+  sl.style.display = 'block';
+  sl.innerHTML = `
+    <div style="font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px">Previously submitted</div>
+    ${submittedStakeholders.map(s => `
+      <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fff;border:1px solid var(--border);border-radius:var(--rs);margin-bottom:4px">
+        <div style="flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:6px">
+          <span style="font-size:13px;font-weight:500;color:var(--ink)">${s.name}</span>
+          ${s.role ? `<span style="font-size:12px;color:var(--ink-3)">${s.role}</span>` : ''}
+          <span style="font-size:12px;color:var(--ink-3)">${s.email}</span>
+          ${s.relationship ? `<span style="font-size:10px;font-weight:500;padding:2px 6px;border-radius:10px;background:var(--blue-lt);color:var(--blue-dk)">${relLabel[s.relationship] || s.relationship}</span>` : ''}
+        </div>
+      </div>`).join('')}`;
+}
+
+async function addStakeholder() {
+  const name         = document.getElementById('sh-name').value.trim();
+  const role         = document.getElementById('sh-role').value.trim();
+  const email        = document.getElementById('sh-email').value.trim();
+  const relationship = document.getElementById('sh-relationship').value;
+  const msg          = document.getElementById('sh-status-msg');
+  if (!name || !email)  { msg.textContent = 'Name and email are required.'; return; }
+  if (!relationship)    { msg.textContent = 'Please select a relationship type.'; return; }
+  msg.textContent = '';
+  const entry = { name, role, email, relationship };
+  stakeholderList.push(entry);
+  document.getElementById('sh-name').value  = '';
+  document.getElementById('sh-role').value  = '';
+  document.getElementById('sh-email').value = '';
+  document.getElementById('sh-relationship').value = '';
+  renderStakeholderList();
+  await saveStakeholderEntry(entry);
+}
+
+async function saveStakeholderEntry(entry) {
+  if (ENGAGEMENT.appsScriptUrl === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') {
+    itemStatus['stakeholders'] = (typeof itemStatus['stakeholders'] === 'number' ? itemStatus['stakeholders'] : 0) + 1;
+    updateStakeholderPill();
+    return;
+  }
+  try {
+    await fetch(ENGAGEMENT.appsScriptUrl + '?action=addStakeholders', {
+      method: 'POST', mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ stakeholders: [entry] }),
+    });
+    itemStatus['stakeholders'] = (typeof itemStatus['stakeholders'] === 'number' ? itemStatus['stakeholders'] : 0) + 1;
+    updateStakeholderPill();
+  } catch(e) {
+    document.getElementById('sh-status-msg').textContent = 'Save failed — please check your connection and try again.';
+  }
+}
+
+function updateStakeholderPill() {
+  const count = typeof itemStatus['stakeholders'] === 'number' ? itemStatus['stakeholders'] : 0;
+  const pill  = document.getElementById('pill-stakeholders');
+  const ic    = document.getElementById('ic-stakeholders');
+  if (pill) { pill.className = 'pill pill-r'; pill.textContent = count === 1 ? '1 identified' : `${count} identified`; }
+  if (ic)   { ic.className = 'item-ic ic-r'; ic.innerHTML = ICONS.check; }
+  const total      = ITEMS.length;
+  const rcv        = ITEMS.filter(i => { const s = itemStatus[i.key]; return typeof s === 'number' ? s > 0 : s === 'received'; }).length;
+  const outstanding = total - rcv;
+  const sp = document.getElementById('doc-sum-pill');
+  const st = document.getElementById('doc-sum-text');
+  if (sp) { sp.className = outstanding === 0 ? 'pill pill-r' : 'pill pill-p'; sp.textContent = outstanding === 0 ? 'All complete' : `${outstanding} outstanding`; }
+  if (st) { st.innerHTML = outstanding === 0 ? '<strong>Everything received.</strong> Thank you!' : `<strong>${rcv} of ${total}</strong> items complete`; }
+  renderStartHere(computePhases());
+}
+
+function removeStakeholder(idx) {
+  stakeholderList.splice(idx, 1);
+  renderStakeholderList();
+}
+
+function renderStakeholderList() {
+  const sl  = document.getElementById('sh-list');
+  const btn = document.getElementById('sh-done-btn');
+  if (stakeholderList.length === 0) { sl.innerHTML = ''; if (btn) btn.style.display = 'none'; return; }
+  if (btn) btn.style.display = 'inline-flex';
+  const relLabel = { 'Board member': 'Board', 'Staff member': 'Staff', 'Contractor/Consultant': 'Contractor', 'Community partner': 'Community', 'Funder': 'Funder', 'Other': 'Other' };
+  sl.innerHTML = stakeholderList.map((s, i) => `
+    <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fff;border:1px solid var(--border);border-radius:var(--rs)">
+      <div style="flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:6px">
+        <span style="font-size:13px;font-weight:500;color:var(--ink)">${s.name}</span>
+        ${s.role ? `<span style="font-size:12px;color:var(--ink-3)">${s.role}</span>` : ''}
+        <span style="font-size:12px;color:var(--ink-3)">${s.email}</span>
+        <span style="font-size:10px;font-weight:500;padding:2px 6px;border-radius:10px;background:var(--blue-lt);color:var(--blue-dk)">${relLabel[s.relationship] || s.relationship}</span>
+        <span style="font-size:11px;color:var(--green-dk)">✓ Saved</span>
+      </div>
+      <button onclick="removeStakeholder(${i})" style="background:none;border:none;cursor:pointer;color:var(--ink-3);font-size:18px;line-height:1;padding:0 2px" title="Remove">&times;</button>
+    </div>`).join('');
+}
+
+function doneAddingStakeholders() {
+  toggleStakeholderForm(false);
+  stakeholderList = [];
+  submittedStakeholders = [];
+  renderStakeholderList();
+  renderStartHere(computePhases());
+}
+
+/* ── HANDLE CLICK ── */
+function handleItemClick(key, type) {
+  /* Optimistic: flip after brief delay (let the link open first) */
+  setTimeout(() => {
+    if (itemStatus[key] !== 'received') {
+      itemStatus[key] = 'received';
+      renderItems();
+      const pill = document.getElementById(`pill-${key}`);
+      if (pill) { pill.style.animation = 'none'; pill.offsetHeight; pill.style.animation = 'pillPop .35s ease'; }
+    }
+  }, 600);
+}
+
+/* ── FETCH STATUS FROM APPS SCRIPT ── */
+async function fetchStatus() {
+  if (ENGAGEMENT.appsScriptUrl === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') {
+    /* Demo mode — pre-populate a couple items for preview */
+    return {};
+  }
+  try {
+    const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?action=getStatus', { mode: 'cors' });
+    const data = await res.json();
+    return data;
+  } catch(e) {
+    console.warn('Status fetch error:', e);
+    return itemStatus;
+  }
+}
+
+/* ── FETCH UPDATES FROM APPS SCRIPT ── */
+async function fetchUpdates() {
+  if (ENGAGEMENT.appsScriptUrl === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') {
+    return [
+      { date: 'April 17, 2026', msg: 'Working session scheduling is now open — please use the Schedule button in your portal to select a time during the week of April 28. Use your organization email when booking.', type: 'reminder' },
+      { date: 'April 17, 2026', msg: 'All documents and logic model completions are due by April 21. Use the upload buttons next to each item in your Documents & Scheduling section.', type: 'info' },
+      { date: 'April 13, 2026', msg: 'Contract signed and deposit received — welcome, Horizon Prison Initiative! We\'re excited to get started. Everything you need for this engagement lives right here.', type: 'milestone' },
+    ];
+  }
+  try {
+    const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?action=getUpdates', { mode: 'cors' });
+    const data = await res.json();
+    return data.updates || [];
+  } catch(e) {
+    return [];
+  }
+}
+
+/* ── CHECK CALENDLY BOOKINGS ── */
+async function checkCalendly() {
+  if (ENGAGEMENT.calendlyApiKey === 'PASTE_YOUR_CALENDLY_API_KEY_HERE') return;
+  if (!ENGAGEMENT.clientDomain || ENGAGEMENT.clientDomain === 'PASTE_CLIENT_EMAIL_DOMAIN_HERE') return;
+
+  const headers  = { Authorization: `Bearer ${ENGAGEMENT.calendlyApiKey}` };
+  const domain   = ENGAGEMENT.clientDomain.toLowerCase().replace(/^@/, '');
+
+  for (const [key, eventUri] of Object.entries(ENGAGEMENT.calendlyEvents)) {
+    const item = ITEMS.find(i => i.calendlyEventKey === key);
+    if (!item || itemStatus[item.key] === 'received') continue;
+
+    try {
+      /* Fetch recent bookings for this event type — up to 20 */
+      const res  = await fetch(
+        `https://api.calendly.com/scheduled_events?event_type=${encodeURIComponent(eventUri)}&count=20&status=active`,
+        { headers }
+      );
+      const data = await res.json();
+      if (!data.collection || data.collection.length === 0) continue;
+
+      /* For each booking, fetch the invitees and check their email domain */
+      for (const event of data.collection) {
+        const invRes  = await fetch(
+          `https://api.calendly.com/scheduled_events/${event.uri.split('/').pop()}/invitees?count=10`,
+          { headers }
+        );
+        const invData = await invRes.json();
+        if (!invData.collection) continue;
+
+        const clientBooked = invData.collection.some(invitee => {
+          const email = (invitee.email || '').toLowerCase();
+          return email.endsWith('@' + domain) || email.endsWith('.' + domain);
+        });
+
+        if (clientBooked) {
+          itemStatus[item.key] = 'received';
+          break; /* Found a match — no need to check more bookings */
+        }
+      }
+    } catch(e) { /* silent — portal still works without Calendly */ }
+  }
+}
+
+/* ── RENDER UPDATES ── */
+function renderUpdates(updates) {
+  const ul = document.getElementById('updates-list');
+  const typeMap = { milestone: 'ud-g', reminder: 'ud-a', info: 'ud-n', note: 'ud-gray' };
+  if (!updates || updates.length === 0) {
+    ul.innerHTML = '<div class="upd-empty">Updates will appear here as your engagement progresses.</div>'; return;
+  }
+  ul.innerHTML = updates.map(u => {
+    const type = (u.type || '').toLowerCase().trim();
+    return `
+    <div class="upd-row">
+      <div class="upd-line">
+        <div class="upd-dot ${typeMap[type] || 'ud-n'}"></div>
+        <div class="upd-conn"></div>
+      </div>
+      <div>
+        <div class="upd-msg">${u.msg}</div>
+        <div class="upd-date">${u.date}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const now = new Date();
+  document.getElementById('updates-timestamp').textContent = `Last refreshed ${now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`;
+  document.getElementById('last-updated-footer').textContent = `Portal last refreshed ${now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} at ${now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`;
+}
+
+/* ── MAIN LOAD ── */
+async function loadAllStatus() {
+  const icon = document.getElementById('refresh-icon');
+  if (icon) icon.classList.add('spin');
+
+  /* Preserve stakeholder panel state before re-render */
+  const shPanel = document.getElementById('sh-form-panel');
+  const shPanelOpen = shPanel ? shPanel.style.display !== 'none' : false;
+
+  const [statusData, updates] = await Promise.all([fetchStatus(), fetchUpdates()]);
+  await checkCalendly();
+
+  Object.assign(itemStatus, statusData);
+  renderItems();
+  renderUpdates(updates);
+
+  /* Restore stakeholder panel if it was open */
+  if (shPanelOpen) {
+    const newPanel = document.getElementById('sh-form-panel');
+    if (newPanel) {
+      newPanel.style.display = 'block';
+      renderStakeholderList();
+    }
+  }
+
+  if (icon) icon.classList.remove('spin');
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  checkClosed();
+  populateStatic();
+  loadAllStatus();
+  if (ENGAGEMENT.refreshInterval > 0) {
+    refreshTimer = setInterval(loadAllStatus, ENGAGEMENT.refreshInterval);
+  }
+});
+</script>
+
+</body>
+</html>
