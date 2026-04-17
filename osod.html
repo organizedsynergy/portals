@@ -990,13 +990,22 @@ async function saveStakeholderEntry(entry) {
     return;
   }
   try {
-    await fetch(ENGAGEMENT.appsScriptUrl + '?action=addStakeholders', {
-      method: 'POST', mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ stakeholders: [entry] }),
+    /* Use GET with params to avoid CORS POST restrictions */
+    const params = new URLSearchParams({
+      action:       'addStakeholder',
+      name:         entry.name         || '',
+      role:         entry.role         || '',
+      email:        entry.email        || '',
+      relationship: entry.relationship || '',
     });
-    itemStatus['stakeholders'] = (typeof itemStatus['stakeholders'] === 'number' ? itemStatus['stakeholders'] : 0) + 1;
-    updateStakeholderPill();
+    const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?' + params.toString(), { mode: 'cors' });
+    const data = await res.json();
+    if (data.added) {
+      itemStatus['stakeholders'] = (typeof itemStatus['stakeholders'] === 'number' ? itemStatus['stakeholders'] : 0) + 1;
+      updateStakeholderPill();
+    } else {
+      document.getElementById('sh-status-msg').textContent = 'Save failed — please try again.';
+    }
   } catch(e) {
     document.getElementById('sh-status-msg').textContent = 'Save failed — please check your connection and try again.';
   }
