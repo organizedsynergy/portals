@@ -218,6 +218,30 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--
 footer{background:var(--navy);text-align:center;padding:22px;font-size:12px;color:rgba(255,255,255,.32)}
 footer a{color:rgba(255,255,255,.45);text-decoration:none}
 .last-updated{font-size:11px;color:rgba(255,255,255,.25);margin-top:4px}
+
+/* ── STAKEHOLDER REQUIREMENTS ── */
+.sh-reqs { margin-bottom: 12px; }
+.sh-req-title { font-size: 11px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+.sh-req-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.sh-req-item { display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid var(--border); background: #fff; }
+.sh-req-item.met { background: var(--green-lt); border-color: var(--green-lt); color: var(--green-dk); }
+.sh-req-item.partial { background: var(--amber-lt); border-color: var(--amber-lt); color: var(--amber-dk); }
+.sh-req-item.empty { background: #fff; color: var(--ink-3); }
+.sh-req-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.sh-req-item.met .sh-req-dot { background: var(--green); }
+.sh-req-item.partial .sh-req-dot { background: var(--amber); }
+.sh-req-item.empty .sh-req-dot { background: var(--border); }
+
+/* ── SUBMITTED ENTRIES ── */
+.sh-submitted-wrap { margin-bottom: 12px; padding-top: 10px; border-top: 1px solid var(--border); display: none; }
+.sh-submitted-wrap.show { display: block; }
+.sh-submitted-title { font-size: 11px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+.sh-entry { display: flex; align-items: center; gap: 8px; padding: 7px 10px; background: #fff; border: 1px solid var(--border); border-radius: var(--rs); margin-bottom: 4px; }
+.sh-entry-info { flex: 1; min-width: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.sh-entry-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.sh-entry-role { font-size: 12px; color: var(--ink-3); }
+.sh-entry-email { font-size: 12px; color: var(--ink-3); }
+.sh-entry-tag { font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 10px; background: var(--blue-lt); color: var(--blue-dk); }
 </style>
 </head>
 <body>
@@ -273,6 +297,15 @@ const ENGAGEMENT = {
 
   calendlyApiKey: "PASTE_YOUR_CALENDLY_API_KEY_HERE",
   clientDomain:   "organizedsynergy.com",
+
+  // Stakeholder requirements — customize per client
+  // type must match exactly what appears in the relationship dropdown
+  stakeholderRequirements: [
+    { type: "Board member",      required: 1 },
+    { type: "Staff member",      required: 2 },
+    { type: "Funder",            required: 2 },
+    { type: "Community partner", required: 1 },
+  ],
   calendlyEvents: {
     working_session: "WORKING_SESSION_EVENT_URI",
     prelim_review:   "PRELIM_REVIEW_EVENT_URI",
@@ -280,7 +313,7 @@ const ENGAGEMENT = {
 
   appsScriptUrl: "PASTE_YOUR_APPS_SCRIPT_URL_HERE",
 
-  refreshInterval: 30000,
+  refreshInterval: 180000,
 
   tools: [
     { label: "Project Google Drive",  sub: "Shared docs & deliverables", cta: "Open folder →",   href: "PASTE_GOOGLE_DRIVE_FOLDER_LINK",                                                                          dot: "tg", icon: "drive" },
@@ -738,6 +771,8 @@ function renderItems() {
             </div>
           </div>
           <div id="sh-form-panel" style="display:none;border-top:1px solid var(--border);background:var(--cream);padding:14px 18px">
+            <div id="sh-reqs-wrap"></div>
+            <div id="sh-submitted-wrap" class="sh-submitted-wrap"></div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:8px;margin-bottom:8px">
               <input id="sh-name"  type="text"  placeholder="Full name"        style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
               <input id="sh-role"  type="text"  placeholder="Title / role"     style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
@@ -754,7 +789,6 @@ function renderItems() {
               <button onclick="addStakeholder()" class="act-btn" style="background:var(--navy);color:#fff;border-color:var(--navy);white-space:nowrap">+ Add</button>
             </div>
             <div id="sh-list" style="display:flex;flex-direction:column;gap:4px;margin-bottom:10px"></div>
-            <div id="sh-submitted-list" style="display:none;margin-bottom:10px;padding-top:10px;border-top:1px solid var(--border)"></div>
             <div style="display:flex;align-items:center;justify-content:space-between">
               <span id="sh-status-msg" style="font-size:12px;color:var(--ink-3)"></span>
               <button id="sh-done-btn" onclick="doneAddingStakeholders()" class="act-btn" style="background:var(--copper);color:#fff;border-color:var(--copper);display:none">
@@ -826,26 +860,28 @@ function renderItems() {
 
 /* ── STAKEHOLDER FORM LOGIC ── */
 let stakeholderList = [];
-let submittedStakeholders = []; /* Loaded from sheet when pill is clicked */
+let submittedStakeholders = [];
+let shDoneTimer = null;
 
 async function toggleStakeholderForm(showSubmitted = false) {
   const panel = document.getElementById('sh-form-panel');
   const btn   = document.getElementById('sh-toggle-btn');
   if (!panel) return;
-  const open  = panel.style.display === 'none';
+  const open = panel.style.display === 'none';
   panel.style.display = open ? 'block' : 'none';
   btn.innerHTML = open
     ? `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Add people`
     : `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2v6M2 5h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Add people`;
 
-  /* If opened by clicking the pill, load previously submitted entries */
-  if (open && showSubmitted) {
+  if (open) {
+    /* Always load submitted entries when panel opens */
     const msg = document.getElementById('sh-status-msg');
     if (msg) msg.textContent = 'Loading submitted entries…';
     const entries = await fetchStakeholders();
     submittedStakeholders = entries;
     if (msg) msg.textContent = '';
     renderSubmittedStakeholders();
+    renderRequirementsTracker();
   }
 }
 
@@ -858,21 +894,62 @@ async function fetchStakeholders() {
   } catch(e) { return []; }
 }
 
+/* Render requirements tracker inside the panel */
+function renderRequirementsTracker() {
+  const wrap = document.getElementById('sh-reqs-wrap');
+  if (!wrap) return;
+  const reqs = ENGAGEMENT.stakeholderRequirements || [];
+  if (!reqs.length) { wrap.style.display = 'none'; return; }
+
+  /* Count submitted by type */
+  const counts = {};
+  submittedStakeholders.forEach(s => {
+    const t = s.relationship || '';
+    counts[t] = (counts[t] || 0) + 1;
+  });
+  /* Also count unsaved (just added this session) */
+  stakeholderList.forEach(s => {
+    const t = s.relationship || '';
+    counts[t] = (counts[t] || 0) + 1;
+  });
+
+  const allMet = reqs.every(r => (counts[r.type] || 0) >= r.required);
+  wrap.style.display = 'block';
+  wrap.innerHTML = `
+    <div class="sh-reqs">
+      <div class="sh-req-title">Who we need to speak with</div>
+      <div class="sh-req-grid">
+        ${reqs.map(r => {
+          const have = counts[r.type] || 0;
+          const cls  = have >= r.required ? 'met' : have > 0 ? 'partial' : 'empty';
+          return `<div class="sh-req-item ${cls}">
+            <div class="sh-req-dot"></div>
+            ${r.type}: ${have}/${r.required}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
 function renderSubmittedStakeholders() {
-  const sl = document.getElementById('sh-submitted-list');
-  if (!sl) return;
-  if (submittedStakeholders.length === 0) { sl.style.display = 'none'; return; }
+  const wrap = document.getElementById('sh-submitted-wrap');
+  if (!wrap) return;
   const relLabel = { 'Board member': 'Board', 'Staff member': 'Staff', 'Contractor/Consultant': 'Contractor', 'Community partner': 'Community', 'Funder': 'Funder', 'Other': 'Other' };
-  sl.style.display = 'block';
-  sl.innerHTML = `
-    <div style="font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px">Previously submitted</div>
+
+  if (submittedStakeholders.length === 0) {
+    wrap.classList.remove('show');
+    return;
+  }
+  wrap.classList.add('show');
+  wrap.innerHTML = `
+    <div class="sh-submitted-title">Previously submitted (${submittedStakeholders.length})</div>
     ${submittedStakeholders.map(s => `
-      <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fff;border:1px solid var(--border);border-radius:var(--rs);margin-bottom:4px">
-        <div style="flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:6px">
-          <span style="font-size:13px;font-weight:500;color:var(--ink)">${s.name}</span>
-          ${s.role ? `<span style="font-size:12px;color:var(--ink-3)">${s.role}</span>` : ''}
-          <span style="font-size:12px;color:var(--ink-3)">${s.email}</span>
-          ${s.relationship ? `<span style="font-size:10px;font-weight:500;padding:2px 6px;border-radius:10px;background:var(--blue-lt);color:var(--blue-dk)">${relLabel[s.relationship] || s.relationship}</span>` : ''}
+      <div class="sh-entry">
+        <div class="sh-entry-info">
+          <span class="sh-entry-name">${s.name}</span>
+          ${s.role  ? `<span class="sh-entry-role">${s.role}</span>` : ''}
+          <span class="sh-entry-email">${s.email}</span>
+          ${s.relationship ? `<span class="sh-entry-tag">${relLabel[s.relationship] || s.relationship}</span>` : ''}
         </div>
       </div>`).join('')}`;
 }
@@ -893,6 +970,16 @@ async function addStakeholder() {
   document.getElementById('sh-email').value = '';
   document.getElementById('sh-relationship').value = '';
   renderStakeholderList();
+  renderRequirementsTracker();
+  /* Show done button and keep it visible for 3 minutes */
+  const doneBtn = document.getElementById('sh-done-btn');
+  if (doneBtn) {
+    doneBtn.style.display = 'inline-flex';
+    if (shDoneTimer) clearTimeout(shDoneTimer);
+    shDoneTimer = setTimeout(() => {
+      if (stakeholderList.length === 0 && doneBtn) doneBtn.style.display = 'none';
+    }, 180000);
+  }
   await saveStakeholderEntry(entry);
 }
 
@@ -939,7 +1026,7 @@ function removeStakeholder(idx) {
 function renderStakeholderList() {
   const sl  = document.getElementById('sh-list');
   const btn = document.getElementById('sh-done-btn');
-  if (stakeholderList.length === 0) { sl.innerHTML = ''; if (btn) btn.style.display = 'none'; return; }
+  if (stakeholderList.length === 0) { sl.innerHTML = ''; if (btn) btn.style.display = 'none'; renderRequirementsTracker(); return; }
   if (btn) btn.style.display = 'inline-flex';
   const relLabel = { 'Board member': 'Board', 'Staff member': 'Staff', 'Contractor/Consultant': 'Contractor', 'Community partner': 'Community', 'Funder': 'Funder', 'Other': 'Other' };
   sl.innerHTML = stakeholderList.map((s, i) => `
@@ -956,6 +1043,7 @@ function renderStakeholderList() {
 }
 
 function doneAddingStakeholders() {
+  if (shDoneTimer) { clearTimeout(shDoneTimer); shDoneTimer = null; }
   toggleStakeholderForm(false);
   stakeholderList = [];
   submittedStakeholders = [];
@@ -965,7 +1053,9 @@ function doneAddingStakeholders() {
 
 /* ── HANDLE CLICK ── */
 function handleItemClick(key, type) {
-  /* Optimistic: flip after brief delay (let the link open first) */
+  /* Scheduling: never flip optimistically — only Calendly confirms it */
+  if (type === 'scheduling') return;
+  /* Docs/forms: optimistic flip after brief delay */
   setTimeout(() => {
     if (itemStatus[key] !== 'received') {
       itemStatus[key] = 'received';
