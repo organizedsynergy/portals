@@ -295,7 +295,7 @@ const ENGAGEMENT = {
     { label: "Engagement end",           date: "June 12, 2026",        autoDate: "2026-06-12", status: "end",      tag: "end"  },
   ],
 
-  calendlyApiKey: "PASTE_YOUR_CALENDLY_API_KEY_HERE",
+  calendlyApiKey: "eyJraWQiOiIxY2UxZTEzNjE3ZGNmNzY2YjNjZWJjY2Y4ZGM1YmFmYThhNjVlNjg0MDIzZjdjMzJiZTgzNDliMjM4MDEzNWI0IiwidHlwIjoiUEFUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNzc2NDc0MzA2LCJqdGkiOiIxODhhYWQ0MS0yNzg3LTRiMTAtODk1OC02YTQ2OWI3NWRjMTIiLCJ1c2VyX3V1aWQiOiJiMmE5NzU3ZS03NTVmLTQzMjAtYTBhNS1hNzkyYTAxZjA3M2UiLCJzY29wZSI6ImF2YWlsYWJpbGl0eTpyZWFkIGF2YWlsYWJpbGl0eTp3cml0ZSBldmVudF90eXBlczpyZWFkIGV2ZW50X3R5cGVzOndyaXRlIGxvY2F0aW9uczpyZWFkIHJvdXRpbmdfZm9ybXM6cmVhZCBzaGFyZXM6d3JpdGUgc2NoZWR1bGVkX2V2ZW50czpyZWFkIHNjaGVkdWxlZF9ldmVudHM6d3JpdGUgc2NoZWR1bGluZ19saW5rczp3cml0ZSJ9.R4_SpwD_p0cqsOZlljbjiMNOJ_k4m_pxUw95S96dETvRCo6dQk-4OybeBaG02AP8FYDe2JUQCZKaoHh6keiFww",
   clientDomain:   "organizedsynergy.com",
 
   // Stakeholder requirements — customize per client
@@ -307,8 +307,8 @@ const ENGAGEMENT = {
     { type: "Community partner", required: 1 },
   ],
   calendlyEvents: {
-    working_session: "WORKING_SESSION_EVENT_URI",
-    prelim_review:   "PRELIM_REVIEW_EVENT_URI",
+    working_session: "https://api.calendly.com/event_types/osod/working-session",
+    prelim_review:   "https://api.calendly.com/event_types/osod/preliminary-review-deliverables",
   },
 
   appsScriptUrl: "https://script.google.com/macros/s/AKfycbzYWEoEqlGnccmasai0Tw-Cpicr6-bKj5ciRcNhD74i0LPaDW_bVeW5f60G7GydgyFIRg/exec",
@@ -316,9 +316,9 @@ const ENGAGEMENT = {
   refreshInterval: 180000,
 
   tools: [
-    { label: "Project Google Drive",  sub: "Shared docs & deliverables", cta: "Open folder →",   href: "PASTE_GOOGLE_DRIVE_FOLDER_LINK",                                                                          dot: "tg", icon: "drive" },
-    { label: "Logic model generator", sub: "Access the form here",       cta: "Open form →",     href: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform", dot: "ta", icon: "form"  },
-    { label: "Schedule a touchbase",  sub: "Questions or check-ins",     cta: "Open Calendly →", href: "PASTE_TOUCHBASE_CALENDLY_LINK",                                                                           dot: "tc", icon: "cal"   },
+    { label: "Project Google Drive",  sub: "Shared docs & deliverables", cta: "Open folder →",   href: "https://drive.google.com/drive/folders/1VYb9RXlYFPTl3l-BeYbfP3JkmEp16at3",                                                                          dot: "tg", icon: "drive" },
+    { label: "Logic model generator", sub: "Access the form here",       cta: "Open form →",     href: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform?usp=sharing&ouid=114598678112851033096", dot: "ta", icon: "form"  },
+    { label: "Schedule a touchbase",  sub: "Questions or check-ins",     cta: "Open Calendly →", href: "https://calendly.com/osod/15-min-client-touch-base",                                                                           dot: "tc", icon: "cal"   },
     { label: "",                      sub: "",                            cta: "",                href: "",                                                                                                         dot: "",   icon: "blank" },
   ],
 
@@ -332,26 +332,26 @@ const ENGAGEMENT = {
 const ITEMS = [
 
   /* ── ORGANIZATION DOCUMENTS ── */
-  { key: "form_990",       label: "IRS Form 990",                    hint: "Most recent year filed",                                                                    cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
-  { key: "annual_report",  label: "Annual report",                   hint: "Most recent available — 2024 or 2023",                                                      cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
-  { key: "org_budget",     label: "Organization operating budget",   hint: "2026 full organization budget",                                                             cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
-  { key: "program_budgets",label: "Program budget(s)",               hint: "Upload one per program — you can submit this form multiple times",                          cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE", multiSubmit: true },
-  { key: "grant_largest",  label: "Largest grant application",       hint: "Your largest grant — any year",                                                             cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
-  { key: "grant_recent_1", label: "Most recent grant application",   hint: "Most recently submitted — approved or declined",                                            cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
-  { key: "grant_recent_2", label: "Second most recent grant",        hint: "Second most recently submitted — approved or declined",                                     cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE" },
-  { key: "marketing",      label: "Marketing materials",             hint: "Brochures, one-pagers, website screenshots, etc. — you can submit this form multiple times", cat: "Organization documents", type: "doc", formUrl: "PASTE_FORM_URL_HERE", multiSubmit: true },
+  { key: "form_990",       label: "IRS Form 990",                    hint: "Most recent year filed",                                                                    cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSd9aHyoBlPgswfMdftQNedfFYklvJbN71CYgtKcUTUdeX6a4w/viewform?usp=header" },
+  { key: "annual_report",  label: "Annual report",                   hint: "Most recent available — 2024 or 2023",                                                      cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeFUWPsvfDT1V2s-OQSQiJBizWWhvopoxgqe6pSQbO9EbiBmQ/viewform?usp=header" },
+  { key: "org_budget",     label: "Organization operating budget",   hint: "2026 full organization budget",                                                             cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfcDRcY0ECnDbCYwdd5-outWQ7ZpRSrQJuRK3q2ECSn103aew/viewform?usp=header" },
+  { key: "program_budgets",label: "Program budget(s)",               hint: "Upload one per program — you can submit this form multiple times",                          cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSchauHAVQzxAXHt_mF1uT-kycLqwcZ2kmwZGXCqNvPaWDLUog/viewform?usp=header", multiSubmit: true },
+  { key: "grant_largest",  label: "Largest grant application",       hint: "Your largest grant — any year",                                                             cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfTSjNbq83B0lDEuIHzjzq9OH88cJZAIkmMXu6JbNhZkZcc8Q/viewform?usp=header" },
+  { key: "grant_recent_1", label: "Most recent grant application",   hint: "Most recently submitted — approved or declined",                                            cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdC93A6ve6WKqPDx4OaZ7CUqR04IHCv8RE0fyWGQFDnpy1FNg/viewform?usp=header" },
+  { key: "grant_recent_2", label: "Second most recent grant",        hint: "Second most recently submitted — approved or declined",                                     cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdp_Gaskj1ktDiwx6psEihBIIj_EwRpEc_lXlfXHoIDjChH2Q/viewform?usp=header" },
+  { key: "marketing",      label: "Marketing materials",             hint: "Brochures, one-pagers, website screenshots, etc. — you can submit this form multiple times", cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeD_OqSKnwaZuf6MZq0rHGRYAN5BVd5em01uIyGEI3knU7IuA/viewform?usp=header", multiSubmit: true },
 
   /* ── STAKEHOLDER LIST ── */
   { key: "stakeholders", label: "Stakeholder identification", hint: "Add the people we should speak with — board members, program staff, or community partners", cat: "Stakeholders", type: "stakeholder" },
 
   /* ── LOGIC MODEL GENERATOR ── */
-  { key: "lm_ed",  label: "Logic model — Jennifer McKenzie (Executive Director)", hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform", isLM: true },
-  { key: "lm_pd1", label: "Logic model — Program Director, Site 1",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform", isLM: true },
-  { key: "lm_pd2", label: "Logic model — Program Director, Site 2",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform", isLM: true },
+  { key: "lm_ed",  label: "Logic model — Jennifer McKenzie (Executive Director)", hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScHdh529bFTq2M_VqxTezJ5_eOAHXC7CdejCoD7pDXxSsHowQ/viewform?usp=header", isLM: true },
+  { key: "lm_pd1", label: "Logic model — Program Director, Site 1",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScB2dkC3u-DVqfGBzY7jHBJ5yX6GH_m7AYBtLVBnrY0PeoQag/viewform?usp=header", isLM: true },
+  { key: "lm_pd2", label: "Logic model — Program Director, Site 2",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfiwFStppP1NsAa3jPnFh1oiVVY_25GawlvaX6Xf16BRgL7uw/viewform?usp=header", isLM: true },
 
   /* ── SCHEDULING ── */
-  { key: "sched_working", label: "Working session",    hint: "2 hours · April 28 – May 4",  cat: "Scheduling", type: "scheduling", calendlyEventKey: "working_session", scheduleUrl: "PASTE_WORKING_SESSION_CALENDLY_LINK" },
-  { key: "sched_prelim",  label: "Preliminary review", hint: "45 minutes · May 11 – 19",    cat: "Scheduling", type: "scheduling", calendlyEventKey: "prelim_review",   scheduleUrl: "PASTE_PRELIM_REVIEW_CALENDLY_LINK"  },
+  { key: "sched_working", label: "Working session",    hint: "2 hours · April 28 – May 4",  cat: "Scheduling", type: "scheduling", calendlyEventKey: "working_session", scheduleUrl: "https://calendly.com/osod/working-session" },
+  { key: "sched_prelim",  label: "Preliminary review", hint: "45 minutes · May 11 – 19",    cat: "Scheduling", type: "scheduling", calendlyEventKey: "prelim_review",   scheduleUrl: "https://calendly.com/osod/preliminary-review-deliverables"  },
 
 ];
 </script>
@@ -396,7 +396,7 @@ const ITEMS = [
     <div id="start-here-list"></div>
     <div style="padding:12px 18px;background:var(--cream);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="var(--ink-3)" stroke-width="1.1"/><line x1="6.5" y1="4" x2="6.5" y2="7.2" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round"/><circle cx="6.5" cy="9" r=".7" fill="var(--ink-3)"/></svg>
-      <span style="font-size:12px;color:var(--ink-3)">Stuck on something? <a href="PASTE_TOUCHBASE_CALENDLY_LINK" target="_blank" style="color:var(--copper);text-decoration:none;font-weight:500">Book a quick 15-min check-in →</a></span>
+      <span style="font-size:12px;color:var(--ink-3)">Stuck on something? <a href="https://calendly.com/osod/15-min-client-touch-base" target="_blank" style="color:var(--copper);text-decoration:none;font-weight:500">Book a quick 15-min check-in →</a></span>
     </div>
   </div>
 
@@ -1114,15 +1114,44 @@ async function checkCalendly() {
   if (ENGAGEMENT.calendlyApiKey === 'PASTE_YOUR_CALENDLY_API_KEY_HERE') return;
   if (!ENGAGEMENT.clientDomain || ENGAGEMENT.clientDomain === 'PASTE_CLIENT_EMAIL_DOMAIN_HERE') return;
 
-  const headers  = { Authorization: `Bearer ${ENGAGEMENT.calendlyApiKey}` };
-  const domain   = ENGAGEMENT.clientDomain.toLowerCase().replace(/^@/, '');
+  const headers = { Authorization: `Bearer ${ENGAGEMENT.calendlyApiKey}` };
+  const domain  = ENGAGEMENT.clientDomain.toLowerCase().replace(/^@/, '');
 
-  for (const [key, eventUri] of Object.entries(ENGAGEMENT.calendlyEvents)) {
+  /* Step 1: Look up the user URI */
+  let userUri;
+  try {
+    const meRes  = await fetch('https://api.calendly.com/users/me', { headers });
+    const meData = await meRes.json();
+    userUri = meData.resource?.uri;
+    if (!userUri) return;
+  } catch(e) { return; }
+
+  /* Step 2: Fetch all event types and match by slug */
+  let eventTypeMap = {}; /* slug -> uri */
+  try {
+    const etRes  = await fetch(`https://api.calendly.com/event_types?user=${encodeURIComponent(userUri)}&count=100`, { headers });
+    const etData = await etRes.json();
+    if (etData.collection) {
+      etData.collection.forEach(et => {
+        eventTypeMap[et.slug] = et.uri;
+      });
+    }
+  } catch(e) { return; }
+
+  /* Step 3: For each scheduling item, check bookings */
+  const slugMap = {
+    working_session: 'working-session',
+    prelim_review:   'preliminary-review-deliverables',
+  };
+
+  for (const [key, slug] of Object.entries(slugMap)) {
     const item = ITEMS.find(i => i.calendlyEventKey === key);
     if (!item || itemStatus[item.key] === 'received') continue;
 
+    const eventUri = eventTypeMap[slug];
+    if (!eventUri) continue;
+
     try {
-      /* Fetch recent bookings for this event type — up to 20 */
       const res  = await fetch(
         `https://api.calendly.com/scheduled_events?event_type=${encodeURIComponent(eventUri)}&count=20&status=active`,
         { headers }
@@ -1130,7 +1159,6 @@ async function checkCalendly() {
       const data = await res.json();
       if (!data.collection || data.collection.length === 0) continue;
 
-      /* For each booking, fetch the invitees and check their email domain */
       for (const event of data.collection) {
         const invRes  = await fetch(
           `https://api.calendly.com/scheduled_events/${event.uri.split('/').pop()}/invitees?count=10`,
@@ -1146,10 +1174,10 @@ async function checkCalendly() {
 
         if (clientBooked) {
           itemStatus[item.key] = 'received';
-          break; /* Found a match — no need to check more bookings */
+          break;
         }
       }
-    } catch(e) { /* silent — portal still works without Calendly */ }
+    } catch(e) { /* silent */ }
   }
 }
 
