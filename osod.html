@@ -1062,17 +1062,10 @@ function doneAddingStakeholders() {
 
 /* ── HANDLE CLICK ── */
 function handleItemClick(key, type) {
-  /* Scheduling: never flip optimistically — only Calendly confirms it */
-  if (type === 'scheduling') return;
-  /* Docs/forms: optimistic flip after brief delay */
-  setTimeout(() => {
-    if (itemStatus[key] !== 'received') {
-      itemStatus[key] = 'received';
-      renderItems();
-      const pill = document.getElementById(`pill-${key}`);
-      if (pill) { pill.style.animation = 'none'; pill.offsetHeight; pill.style.animation = 'pillPop .35s ease'; }
-    }
-  }, 600);
+  /* No optimistic flipping — pills only flip when Apps Script confirms receipt */
+  /* For scheduling: Calendly API confirms booking */
+  /* For docs: Apps Script detects a new row in the sheet */
+  return;
 }
 
 /* ── FETCH STATUS FROM APPS SCRIPT ── */
@@ -1169,7 +1162,9 @@ async function checkCalendly() {
 
         const clientBooked = invData.collection.some(invitee => {
           const email = (invitee.email || '').toLowerCase();
-          return email.endsWith('@' + domain) || email.endsWith('.' + domain);
+          /* Match client domain — for OSOD test this is organizedsynergy.com */
+          return email.endsWith('@' + domain) || email.endsWith('.' + domain)
+                 || email.includes(domain.split('.')[0]); /* partial match for subdomains */
         });
 
         if (clientBooked) {
