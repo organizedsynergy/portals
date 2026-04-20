@@ -825,11 +825,6 @@ function renderItems() {
     const btnLabel = item.type === 'scheduling' ? `${ICONS.sched} Schedule` : `${ICONS.up} Upload`;
     const hideBtn  = isReceived && !isMulti && item.type !== 'scheduling';
 
-    /* For scheduling items not yet received, show both Schedule and confirm buttons */
-    const confirmBtn = item.type === 'scheduling' && !isReceived
-      ? `<button class="act-btn" onclick="confirmScheduling('${item.key}')" style="background:var(--navy);color:#fff;border-color:var(--navy)">✓ I've scheduled</button>`
-      : '';
-
     html += `
       <div class="item-row" id="row-${item.key}">
         <div class="item-ic ${icClass}" id="ic-${item.key}">${icInner}</div>
@@ -841,7 +836,6 @@ function renderItems() {
           <span class="${pillCls}" id="pill-${item.key}">${pillTxt}</span>
           <a href="${btnUrl}" target="_blank" class="act-btn${hideBtn ? ' hidden' : ''}" id="btn-${item.key}"
              onclick="handleItemClick('${item.key}', '${item.type}')">${btnLabel}</a>
-          ${confirmBtn}
         </div>
       </div>`;
   });
