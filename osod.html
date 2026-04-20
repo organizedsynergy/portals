@@ -1103,6 +1103,9 @@ async function fetchUpdates() {
 }
 
 /* ── CHECK CALENDLY BOOKINGS ── */
+/* Persist Calendly confirmed bookings in memory across refreshes */
+const calendlyConfirmed = {};
+
 async function checkCalendly() {
   /* Route through Apps Script to avoid CORS restrictions on api.calendly.com */
   if (ENGAGEMENT.appsScriptUrl === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') return;
@@ -1115,7 +1118,13 @@ async function checkCalendly() {
 
   for (const [key, slug] of Object.entries(slugMap)) {
     const item = ITEMS.find(i => i.calendlyEventKey === key);
-    if (!item || itemStatus[item.key] === 'received') continue;
+    if (!item) continue;
+
+    /* If already confirmed this session, keep it */
+    if (calendlyConfirmed[item.key]) {
+      itemStatus[item.key] = 'received';
+      continue;
+    }
 
     try {
       const params = new URLSearchParams({
@@ -1126,8 +1135,8 @@ async function checkCalendly() {
       const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?' + params.toString(), { mode: 'cors' });
       const data = await res.json();
       if (data.booked) {
+        calendlyConfirmed[item.key] = true;
         itemStatus[item.key] = 'received';
-        renderItems(); /* re-render immediately when a booking is confirmed */
       }
     } catch(e) { /* silent */ }
   }
@@ -1170,18 +1179,9 @@ async function loadAllStatus() {
   const shPanelOpen = shPanel ? shPanel.style.display !== 'none' : false;
 
   const [statusData, updates] = await Promise.all([fetchStatus(), fetchUpdates()]);
-
-  /* Preserve any Calendly-confirmed bookings across refreshes */
-  const preservedCalendly = {};
-  ITEMS.filter(i => i.type === 'scheduling').forEach(i => {
-    if (itemStatus[i.key] === 'received') preservedCalendly[i.key] = 'received';
-  });
-
   Object.assign(itemStatus, statusData);
 
-  /* Restore preserved Calendly bookings */
-  Object.assign(itemStatus, preservedCalendly);
-
+  /* Check Calendly and preserve results — Calendly is source of truth for scheduling */
   await checkCalendly();
   renderItems();
   renderUpdates(updates);
