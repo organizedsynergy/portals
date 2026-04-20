@@ -296,7 +296,7 @@ const ENGAGEMENT = {
   ],
 
   calendlyApiKey: "eyJraWQiOiIxY2UxZTEzNjE3ZGNmNzY2YjNjZWJjY2Y4ZGM1YmFmYThhNjVlNjg0MDIzZjdjMzJiZTgzNDliMjM4MDEzNWI0IiwidHlwIjoiUEFUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNzc2Njk2Mzc0LCJqdGkiOiI0YzkwZjEzNC03YTRjLTQ0ZjAtYTYwZC01MzU4YjgzNzM3YWEiLCJ1c2VyX3V1aWQiOiJiMmE5NzU3ZS03NTVmLTQzMjAtYTBhNS1hNzkyYTAxZjA3M2UiLCJzY29wZSI6ImF2YWlsYWJpbGl0eTpyZWFkIGF2YWlsYWJpbGl0eTp3cml0ZSBldmVudF90eXBlczpyZWFkIGV2ZW50X3R5cGVzOndyaXRlIGxvY2F0aW9uczpyZWFkIHJvdXRpbmdfZm9ybXM6cmVhZCBzaGFyZXM6d3JpdGUgc2NoZWR1bGVkX2V2ZW50czpyZWFkIHNjaGVkdWxlZF9ldmVudHM6d3JpdGUgc2NoZWR1bGluZ19saW5rczp3cml0ZSBncm91cHM6cmVhZCBvcmdhbml6YXRpb25zOnJlYWQgb3JnYW5pemF0aW9uczp3cml0ZSB1c2VyczpyZWFkIGFjdGl2aXR5X2xvZzpyZWFkIGRhdGFfY29tcGxpYW5jZTp3cml0ZSBvdXRnb2luZ19jb21tdW5pY2F0aW9uczpyZWFkIHdlYmhvb2tzOnJlYWQgd2ViaG9va3M6d3JpdGUifQ.7ecpgR2bEFaYyfhuuw5AsJKyXdM_T9o15V7GAV2nBD01Z9KhyC6pBQUDIYKLe2MIh79U9cASfq3HAYA_WsYOVg",
-  clientEmails:   ["jennifer@organizedsynergy.com", "jsarahscott132@gmail.com"], /* all emails client may use to book */
+  /* No client email needed — each client gets their own Calendly event type slug */
 
   // Stakeholder requirements — customize per client
   // type must match exactly what appears in the relationship dropdown
@@ -350,8 +350,8 @@ const ITEMS = [
   { key: "lm_pd2", label: "Logic model — Program Director, Site 2",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfiwFStppP1NsAa3jPnFh1oiVVY_25GawlvaX6Xf16BRgL7uw/viewform?usp=header", isLM: true },
 
   /* ── SCHEDULING ── */
-  { key: "sched_working", label: "Working session",    hint: "2 hours · April 28 – May 4",  cat: "Scheduling", type: "scheduling", calendlyEventKey: "working_session", scheduleUrl: "https://calendly.com/osod/working-session" },
-  { key: "sched_prelim",  label: "Preliminary review", hint: "45 minutes · May 11 – 19",    cat: "Scheduling", type: "scheduling", calendlyEventKey: "prelim_review",   scheduleUrl: "https://calendly.com/osod/preliminary-review-deliverables"  },
+  { key: "sched_working", label: "Working session",    hint: "2 hours · April 28 – May 4",  cat: "Scheduling", type: "scheduling", calendlyEventKey: "working_session", scheduleUrl: "https://calendly.com/osod/working-session-osod" },
+  { key: "sched_prelim",  label: "Preliminary review", hint: "45 minutes · May 11 – 19",    cat: "Scheduling", type: "scheduling", calendlyEventKey: "prelim_review",   scheduleUrl: "https://calendly.com/osod/preliminary-review-deliverables-osod"  },
 
 ];
 </script>
@@ -1109,8 +1109,8 @@ async function checkCalendly() {
   if (ENGAGEMENT.calendlyApiKey === 'PASTE_YOUR_CALENDLY_API_KEY_HERE') return;
 
   const slugMap = {
-    working_session: 'working-session',
-    prelim_review:   'preliminary-review-deliverables',
+    working_session: 'working-session-osod',
+    prelim_review:   'preliminary-review-deliverables-osod',
   };
 
   for (const [key, slug] of Object.entries(slugMap)) {
@@ -1122,7 +1122,6 @@ async function checkCalendly() {
         action:      'checkCalendly',
         apiKey:      ENGAGEMENT.calendlyApiKey,
         slug:        slug,
-        emails:      (ENGAGEMENT.clientEmails || []).join(','),
       });
       const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?' + params.toString(), { mode: 'cors' });
       const data = await res.json();
