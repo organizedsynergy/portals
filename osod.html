@@ -295,8 +295,7 @@ const ENGAGEMENT = {
     { label: "Engagement end",           date: "June 12, 2026",        autoDate: "2026-06-12", status: "end",      tag: "end"  },
   ],
 
-  calendlyApiKey: "eyJraWQiOiIxY2UxZTEzNjE3ZGNmNzY2YjNjZWJjY2Y4ZGM1YmFmYThhNjVlNjg0MDIzZjdjMzJiZTgzNDliMjM4MDEzNWI0IiwidHlwIjoiUEFUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNzc2Njk2Mzc0LCJqdGkiOiI0YzkwZjEzNC03YTRjLTQ0ZjAtYTYwZC01MzU4YjgzNzM3YWEiLCJ1c2VyX3V1aWQiOiJiMmE5NzU3ZS03NTVmLTQzMjAtYTBhNS1hNzkyYTAxZjA3M2UiLCJzY29wZSI6ImF2YWlsYWJpbGl0eTpyZWFkIGF2YWlsYWJpbGl0eTp3cml0ZSBldmVudF90eXBlczpyZWFkIGV2ZW50X3R5cGVzOndyaXRlIGxvY2F0aW9uczpyZWFkIHJvdXRpbmdfZm9ybXM6cmVhZCBzaGFyZXM6d3JpdGUgc2NoZWR1bGVkX2V2ZW50czpyZWFkIHNjaGVkdWxlZF9ldmVudHM6d3JpdGUgc2NoZWR1bGluZ19saW5rczp3cml0ZSBncm91cHM6cmVhZCBvcmdhbml6YXRpb25zOnJlYWQgb3JnYW5pemF0aW9uczp3cml0ZSB1c2VyczpyZWFkIGFjdGl2aXR5X2xvZzpyZWFkIGRhdGFfY29tcGxpYW5jZTp3cml0ZSBvdXRnb2luZ19jb21tdW5pY2F0aW9uczpyZWFkIHdlYmhvb2tzOnJlYWQgd2ViaG9va3M6d3JpdGUifQ.7ecpgR2bEFaYyfhuuw5AsJKyXdM_T9o15V7GAV2nBD01Z9KhyC6pBQUDIYKLe2MIh79U9cASfq3HAYA_WsYOVg",
-  /* No client email needed — each client gets their own Calendly event type slug */
+  /* Calendly API key not needed — scheduling confirmed manually by client */
 
   // Stakeholder requirements — customize per client
   // type must match exactly what appears in the relationship dropdown
@@ -826,6 +825,11 @@ function renderItems() {
     const btnLabel = item.type === 'scheduling' ? `${ICONS.sched} Schedule` : `${ICONS.up} Upload`;
     const hideBtn  = isReceived && !isMulti && item.type !== 'scheduling';
 
+    /* For scheduling items not yet received, show both Schedule and confirm buttons */
+    const confirmBtn = item.type === 'scheduling' && !isReceived
+      ? `<button class="act-btn" onclick="confirmScheduling('${item.key}')" style="background:var(--navy);color:#fff;border-color:var(--navy)">✓ I've scheduled</button>`
+      : '';
+
     html += `
       <div class="item-row" id="row-${item.key}">
         <div class="item-ic ${icClass}" id="ic-${item.key}">${icInner}</div>
@@ -837,6 +841,7 @@ function renderItems() {
           <span class="${pillCls}" id="pill-${item.key}">${pillTxt}</span>
           <a href="${btnUrl}" target="_blank" class="act-btn${hideBtn ? ' hidden' : ''}" id="btn-${item.key}"
              onclick="handleItemClick('${item.key}', '${item.type}')">${btnLabel}</a>
+          ${confirmBtn}
         </div>
       </div>`;
   });
@@ -1103,43 +1108,23 @@ async function fetchUpdates() {
 }
 
 /* ── CHECK CALENDLY BOOKINGS ── */
-/* Persist Calendly confirmed bookings in memory across refreshes */
-const calendlyConfirmed = {};
-
-async function checkCalendly() {
-  /* Route through Apps Script to avoid CORS restrictions on api.calendly.com */
+/* ── CONFIRM SCHEDULING ──
+   Called when client clicks "I've scheduled" button.
+   Writes a confirmation row to the sheet via Apps Script. */
+async function confirmScheduling(itemKey) {
   if (ENGAGEMENT.appsScriptUrl === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') return;
-  if (ENGAGEMENT.calendlyApiKey === 'PASTE_YOUR_CALENDLY_API_KEY_HERE') return;
-
-  const slugMap = {
-    working_session: 'working-session-osod',
-    prelim_review:   'preliminary-review-deliverables-osod',
-  };
-
-  for (const [key, slug] of Object.entries(slugMap)) {
-    const item = ITEMS.find(i => i.calendlyEventKey === key);
-    if (!item) continue;
-
-    /* If already confirmed this session, keep it */
-    if (calendlyConfirmed[item.key]) {
-      itemStatus[item.key] = 'received';
-      continue;
+  try {
+    const params = new URLSearchParams({
+      action:  'confirmScheduling',
+      itemKey: itemKey,
+    });
+    const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?' + params.toString(), { mode: 'cors' });
+    const data = await res.json();
+    if (data.confirmed) {
+      itemStatus[itemKey] = 'received';
+      renderItems();
     }
-
-    try {
-      const params = new URLSearchParams({
-        action:      'checkCalendly',
-        apiKey:      ENGAGEMENT.calendlyApiKey,
-        slug:        slug,
-      });
-      const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?' + params.toString(), { mode: 'cors' });
-      const data = await res.json();
-      if (data.booked) {
-        calendlyConfirmed[item.key] = true;
-        itemStatus[item.key] = 'received';
-      }
-    } catch(e) { /* silent */ }
-  }
+  } catch(e) { /* silent */ }
 }
 
 /* ── RENDER UPDATES ── */
@@ -1180,9 +1165,6 @@ async function loadAllStatus() {
 
   const [statusData, updates] = await Promise.all([fetchStatus(), fetchUpdates()]);
   Object.assign(itemStatus, statusData);
-
-  /* Check Calendly and preserve results — Calendly is source of truth for scheduling */
-  await checkCalendly();
   renderItems();
   renderUpdates(updates);
 
