@@ -315,7 +315,7 @@ const ENGAGEMENT = {
   refreshInterval: 180000,
 
   tools: [
-    { label: "Project Google Drive",  sub: "Shared docs & deliverables", cta: "Open folder →",   href: "https://drive.google.com/drive/folders/1deQOkCtMgGJRS7AZu9UWynjOIx3IL14M",                                                                          dot: "tg", icon: "drive" },
+    { label: "Project Google Drive",  sub: "Shared docs & deliverables", cta: "Open folder →",   href: "https://drive.google.com/drive/folders/1qS2ZkMu2tw_M-xqti8C8sMMugA-kbuaA",                                                                          dot: "tg", icon: "drive" },
     { label: "Logic model generator", sub: "Access the form here",       cta: "Open form →",     href: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform?usp=sharing&ouid=114598678112851033096", dot: "ta", icon: "form"  },
     { label: "Schedule a touchbase",  sub: "Stuck on something or have a question? Book a quick 15-min check-in →", cta: "Open Calendly →", href: "https://calendly.com/osod/15-min-client-touch-base",                                                                           dot: "tc", icon: "cal"   },
     { label: "",                      sub: "",                            cta: "",                href: "",                                                                                                         dot: "",   icon: "blank" },
@@ -332,7 +332,7 @@ const ITEMS = [
 
   /* ── ORGANIZATION DOCUMENTS ── */
   { key: "form_990",       label: "IRS Form 990",                    hint: "Most recent year filed",                                                                    cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSde3mNo6XcHbQXYPzbi3l2QgGKIuvyPOii1LzBBO3IKC0-Mlg/viewform?usp=publish-editor" },
-  { key: "annual_report",  label: "Annual report",                   hint: "Most recent available — 2024 or 2023",                                                      cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScz83NDtuxT9dvGwAQgaZZbxqSzjLdZtN7p62mKQF2wYCmbmg/viewform?usp=header" },
+  { key: "annual_report",  label: "Annual report",                   hint: "Most recent available — 2024 or 2023",                                                      cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeFUWPsvfDT1V2s-OQSQiJBizWWhvopoxgqe6pSQbO9EbiBmQ/viewform?usp=header" },
   { key: "org_budget",     label: "Organization operating budget",   hint: "2026 full organization budget",                                                             cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdS3ke5h6cJNBD9vovM6-dwMgAbhMe6OdeKfhUdmZf4TmYZSQ/viewform?usp=publish-editor" },
   { key: "program_budgets",label: "Program budget(s)",               hint: "Upload one per program — you can submit this form multiple times",                          cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSd6TyBe8cp5qCGxZ4Gqxl0rk48qYRelWNTIBMn110DdLboAZA/viewform?usp=publish-editor", multiSubmit: true },
   { key: "grant_largest",  label: "Largest grant application",       hint: "Your largest grant — any year",                                                             cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeyYYth16zJwfZYBzFPZt9imD9_FftKrZwgtERoLO0dKF4JPQ/viewform?usp=publish-editor" },
@@ -414,6 +414,7 @@ const ITEMS = [
     </div>
     <div class="doc-footer">
       <div class="doc-footer-txt" id="doc-sum-text">Loading status…</div>
+      <div style="font-size:11px;color:var(--ink-3);font-style:italic">Status updates may take up to 2 minutes to reflect.</div>
       <button class="refresh-btn" id="refresh-btn" onclick="loadAllStatus()">
         <svg id="refresh-icon" viewBox="0 0 12 12" fill="none" width="11" height="11"><path d="M10.5 6A4.5 4.5 0 112.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M2.5 1.5v2h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Refresh
@@ -805,7 +806,7 @@ function renderItems() {
             </div>
             <div id="sh-list" style="display:flex;flex-direction:column;gap:4px;margin-bottom:10px"></div>
             <div style="display:flex;align-items:center;justify-content:space-between">
-              <span id="sh-status-msg" style="font-size:12px;color:var(--ink-3)"></span>
+              <span id="sh-status-msg" style="font-size:12px;color:var(--ink-3)">Entries may take up to 2 minutes to appear after saving.</span>
               <button id="sh-done-btn" onclick="doneAddingStakeholders()" class="act-btn" style="background:var(--copper);color:#fff;border-color:var(--copper);display:none">
                 Done — close form
               </button>
@@ -857,7 +858,7 @@ function renderItems() {
               <button onclick="addFunder()" class="act-btn" style="background:var(--navy);color:#fff;border-color:var(--navy);white-space:nowrap">+ Add</button>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between">
-              <span id="funder-status-msg" style="font-size:12px;color:var(--ink-3)"></span>
+              <span id="funder-status-msg" style="font-size:12px;color:var(--ink-3)">Entries may take up to 2 minutes to appear after saving.</span>
               <button onclick="toggleFunderForm()" class="act-btn" style="background:var(--copper);color:#fff;border-color:var(--copper)">Done</button>
             </div>
           </div>
