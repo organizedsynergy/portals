@@ -287,12 +287,12 @@ const ENGAGEMENT = {
 
   milestones: [
     { label: "Contract signed",          date: "April 13, 2026",       autoDate: "2026-04-13", status: "done",     tag: "both" },
-    { label: "Documents due",            date: "April 27, 2026",       autoDate: "2026-04-21", status: "active",   tag: "you"  },
+    { label: "Documents due",            date: "April 21, 2026",       autoDate: "2026-04-27", status: "active",   tag: "you"  },
     { label: "Working session",          date: "April 28 – May 4",     autoDate: "2026-05-04", status: "upcoming", tag: "both" },
     { label: "Preliminary review",       date: "May 11 – 19, 2026",    autoDate: "2026-05-19", status: "upcoming", tag: "both" },
     { label: "Final delivery + invoice", date: "May 27, 2026",         autoDate: "2026-05-27", status: "upcoming", tag: "os",
       note: "Looking for your final deliverables? Find them in the Project Google Drive link in your Tools & Links section." },
-    { label: "Engagement end",           date: "June 30, 2026",        autoDate: "2026-06-12", status: "end",      tag: "end"  },
+    { label: "Engagement end",           date: "June 30, 2026",        autoDate: "2026-06-30", status: "end",      tag: "end"  },
   ],
 
   /* Calendly API key not needed — scheduling confirmed manually by client */
@@ -306,7 +306,7 @@ const ENGAGEMENT = {
     { type: "Community partner", required: 1 },
   ],
   calendlyEvents: {
-    working_session: "https://api.calendly.com/event_types/osod/working-session",
+    working_session: "https://api.calendly.com/event_types/osod/working-session-hpi",
     prelim_review:   "https://api.calendly.com/event_types/osod/preliminary-review-deliverables",
   },
 
@@ -315,7 +315,7 @@ const ENGAGEMENT = {
   refreshInterval: 180000,
 
   tools: [
-    { label: "Project Google Drive",  sub: "Shared docs & deliverables", cta: "Open folder →",   href: "https://drive.google.com/drive/folders/1VYb9RXlYFPTl3l-BeYbfP3JkmEp16at3",                                                                          dot: "tg", icon: "drive" },
+    { label: "Project Google Drive",  sub: "Shared docs & deliverables", cta: "Open folder →",   href: "https://drive.google.com/drive/folders/1deQOkCtMgGJRS7AZu9UWynjOIx3IL14M",                                                                          dot: "tg", icon: "drive" },
     { label: "Logic model generator", sub: "Access the form here",       cta: "Open form →",     href: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform?usp=sharing&ouid=114598678112851033096", dot: "ta", icon: "form"  },
     { label: "Schedule a touchbase",  sub: "Questions or check-ins",     cta: "Open Calendly →", href: "https://calendly.com/osod/15-min-client-touch-base",                                                                           dot: "tc", icon: "cal"   },
     { label: "",                      sub: "",                            cta: "",                href: "",                                                                                                         dot: "",   icon: "blank" },
@@ -323,7 +323,7 @@ const ENGAGEMENT = {
 
   closedMessage: {
     heading: "This engagement is now complete.",
-    body:    "Thank you for working with us, Organized Synergy on Demand. If you're ready to take the next step in your fundraising journey — we'd love to continue the work together.",
+    body:    "Thank you for working with us, Horizon Prison Initiative. If you're ready to take the next step in your fundraising journey — we'd love to continue the work together.",
     cta:     "Reach Jennifer at <a href='mailto:jennifer@organizedsynergy.com'>jennifer@organizedsynergy.com</a> or <a href='tel:6143296858'>(614) 329-6858</a>.",
   },
 };
@@ -332,25 +332,31 @@ const ITEMS = [
 
   /* ── ORGANIZATION DOCUMENTS ── */
   { key: "form_990",       label: "IRS Form 990",                    hint: "Most recent year filed",                                                                    cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSde3mNo6XcHbQXYPzbi3l2QgGKIuvyPOii1LzBBO3IKC0-Mlg/viewform?usp=publish-editor" },
-  { key: "annual_report",  label: "Annual report",                   hint: "Most recent available",                                                      cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScz83NDtuxT9dvGwAQgaZZbxqSzjLdZtN7p62mKQF2wYCmbmg/viewform?usp=header" },
-  { key: "org_budget",     label: "Organization operating budget",   hint: "current organization budget",                                                             cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdS3ke5h6cJNBD9vovM6-dwMgAbhMe6OdeKfhUdmZf4TmYZSQ/viewform?usp=publish-editor" },
+  { key: "annual_report",  label: "Annual report",                   hint: "Most recent available — 2024 or 2023",                                                      cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScz83NDtuxT9dvGwAQgaZZbxqSzjLdZtN7p62mKQF2wYCmbmg/viewform?usp=publish-editor" },
+  { key: "org_budget",     label: "Organization operating budget",   hint: "2026 full organization budget",                                                             cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdS3ke5h6cJNBD9vovM6-dwMgAbhMe6OdeKfhUdmZf4TmYZSQ/viewform?usp=publish-editor" },
   { key: "program_budgets",label: "Program budget(s)",               hint: "Upload one per program — you can submit this form multiple times",                          cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSd6TyBe8cp5qCGxZ4Gqxl0rk48qYRelWNTIBMn110DdLboAZA/viewform?usp=publish-editor", multiSubmit: true },
-  { key: "grant_largest",  label: "Largest grant application",       hint: "Your grant for the largest revenue source — any year",                                                             cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeyYYth16zJwfZYBzFPZt9imD9_FftKrZwgtERoLO0dKF4JPQ/viewform?usp=publish-editor" },
+  { key: "grant_largest",  label: "Largest grant application",       hint: "Your largest grant — any year",                                                             cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeyYYth16zJwfZYBzFPZt9imD9_FftKrZwgtERoLO0dKF4JPQ/viewform?usp=publish-editor" },
   { key: "grant_recent_1", label: "Most recent grant application",   hint: "Most recently submitted — approved or declined",                                            cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeB3_CENpMUJJgfcV1hifKUZGT5db2tlG0FTZOIb2VmGWBXUA/viewform?usp=publish-editor" },
   { key: "grant_recent_2", label: "Second most recent grant",        hint: "Second most recently submitted — approved or declined",                                     cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSc0p7vTK1ZeqppTrijMWMqCRsquR-GTh65WQRQ9wrREk0QP6A/viewform?usp=publish-editor" },
-  { key: "marketing",      label: "Marketing materials",             hint: "Brochures, one-pagers, funder presentations, case for support, etc. — you can submit this form multiple times", cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeqhRY703XWc6M_dAcZesde0KNw_rKLuhU7Ni4RwUmfChrD4A/viewform?usp=publish-editor", multiSubmit: true },
+  { key: "marketing",      label: "Marketing materials",             hint: "Brochures, one-pagers, website screenshots, etc. — you can submit this form multiple times", cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeqhRY703XWc6M_dAcZesde0KNw_rKLuhU7Ni4RwUmfChrD4A/viewform?usp=publish-editor", multiSubmit: true },
 
   /* ── STAKEHOLDER LIST ── */
   { key: "stakeholders", label: "Stakeholder identification", hint: "Add the people we should speak with — board members, program staff, or community partners", cat: "Stakeholders", type: "stakeholder" },
 
   /* ── LOGIC MODEL GENERATOR ── */
-  { key: "lm_ed",  label: "Logic model — Jennifer McKenzie (Executive Director)", hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdHlXVsSqk3jkMwY3sq5TetutqsHS7-utfW1qMYcO0j2l9-0A/viewform?usp=publish-editor", isLM: true },
+  { key: "lm_ed",  label: "Logic model — Executive Director", hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdHlXVsSqk3jkMwY3sq5TetutqsHS7-utfW1qMYcO0j2l9-0A/viewform?usp=publish-editor", isLM: true },
   { key: "lm_pd1", label: "Logic model — Program Director, Site 1",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSf2XgOKrhXYSw4wBz6oBsNJ-urwqEYHM2pStMu2iauTL900LA/viewform?usp=publish-editor", isLM: true },
   { key: "lm_pd2", label: "Logic model — Program Director, Site 2",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScKDPY1yThIx6-4MgVWr4oLlaU1lR-WYOEcsBQPn2FtYZI83A/viewform?usp=publish-editor", isLM: true },
 
+  /* ── ADDITIONAL DOCUMENTS ── */
+  { key: "additional_docs", label: "Additional documents", hint: "Anything else you'd like to share — reports, presentations, previous grant materials, funder lists, or any other relevant files. You can submit this form multiple times.", cat: "Additional documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSde3mNo6XcHbQXYPzbi3l2QgGKIuvyPOii1LzBBO3IKC0-Mlg/viewform?usp=publish-editor", multiSubmit: true },
+
+  /* ── FUNDER WISHLIST ── */
+  { key: "funders", label: "Funder wishlist", hint: "Know of a funder you'd like us to research? Add them here — name, website, and any notes. We'll include them in our funder research.", cat: "Funder wishlist", type: "funder" },
+
   /* ── SCHEDULING ── */
-  { key: "sched_working", label: "Working session",    hint: "2 hours · April 28 – May 4",  cat: "Scheduling", type: "scheduling", calendlyEventKey: "working_session", scheduleUrl: "https://calendly.com/osod/working-session-xyz" },
-  { key: "sched_prelim",  label: "Preliminary review", hint: "45 minutes · May 11 – 19",    cat: "Scheduling", type: "scheduling", calendlyEventKey: "prelim_review",   scheduleUrl: "https://calendly.com/osod/preliminary-review-deliverables-xyz"  },
+  { key: "sched_working", label: "Working session",    hint: "2 hours · April 28 – May 4",  cat: "Scheduling", type: "scheduling", calendlyEventKey: "working_session", scheduleUrl: "https://calendly.com/osod/working-session-hpi" },
+  { key: "sched_prelim",  label: "Preliminary review", hint: "45 minutes · May 11 – 19",    cat: "Scheduling", type: "scheduling", calendlyEventKey: "prelim_review",   scheduleUrl: "https://calendly.com/osod/preliminary-review-deliverables-hpi"  },
 
 ];
 </script>
@@ -373,7 +379,7 @@ const ITEMS = [
     <div class="mp"><span class="lbl">Engagement</span><span class="val" id="meta-type"></span></div>
     <div class="mp"><span class="lbl">Contract begin</span><span class="val" id="meta-begin"></span></div>
     <div class="mp"><span class="lbl">Contract end</span><span class="val" id="meta-end"></span></div>
-    <div class="mp"><span class="lbl">Your lead</span><span class="val">Jennifer McKenzie</span></div>
+    <div class="mp"><span class="lbl">Your lead</span><span class="val">Renee Wormack-Keels</span></div>
   </div>
   <div class="closed-message" id="closed-msg">
     <h3 id="closed-heading"></h3>
@@ -762,16 +768,22 @@ function renderItems() {
               <div class="item-hint">${item.hint}</div>
             </div>
             <div class="item-acts">
-              <span class="${pillCls}" id="pill-${item.key}" ${count > 0 ? 'onclick="toggleStakeholderForm(true)" style="cursor:pointer;text-decoration:underline dotted"' : ''}>${pillTxt}</span>
+              <span class="${pillCls}" id="pill-${item.key}"
+                style="${count > 0 ? 'cursor:pointer' : ''}"
+                onclick="${count > 0 ? 'toggleStakeholderEntries()' : ''}"
+                title="${count > 0 ? 'Click to view submitted entries' : ''}">${pillTxt}</span>
               <button class="act-btn" onclick="toggleStakeholderForm(false)" id="sh-toggle-btn">
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2v6M2 5h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
                 Add people
               </button>
             </div>
           </div>
+          <div id="sh-entries-panel" style="display:none;border-top:1px solid var(--border);background:var(--cream);padding:10px 18px 6px">
+            <div style="font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px">Submitted stakeholders</div>
+            <div id="sh-entries-list"></div>
+          </div>
           <div id="sh-form-panel" style="display:none;border-top:1px solid var(--border);background:var(--cream);padding:14px 18px">
             <div id="sh-reqs-wrap"></div>
-            <div id="sh-submitted-wrap" class="sh-submitted-wrap"></div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:8px;margin-bottom:8px">
               <input id="sh-name"  type="text"  placeholder="Full name"        style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
               <input id="sh-role"  type="text"  placeholder="Title / role"     style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
@@ -793,6 +805,54 @@ function renderItems() {
               <button id="sh-done-btn" onclick="doneAddingStakeholders()" class="act-btn" style="background:var(--copper);color:#fff;border-color:var(--copper);display:none">
                 Done — close form
               </button>
+            </div>
+          </div>
+        </div>`;
+      return;
+    }
+
+    /* ── FUNDER WISHLIST ITEM ── */
+    if (item.type === 'funder') {
+      const count = typeof itemStatus[item.key] === 'number' ? itemStatus[item.key] : 0;
+      if (count > 0) received++;
+      const pillCls = count > 0 ? 'pill pill-r' : 'pill pill-p';
+      const pillTxt = count > 0 ? `${count} added` : 'None yet';
+      html += `
+        <div class="item-row" id="row-${item.key}" style="flex-direction:column;align-items:stretch;gap:0;padding:0">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 18px">
+            <div class="item-ic ${count > 0 ? 'ic-r' : 'ic-s'}" id="ic-${item.key}">${count > 0 ? ICONS.check : ICONS.cal}</div>
+            <div class="item-info">
+              <div class="item-name">${item.label}</div>
+              <div class="item-hint">${item.hint}</div>
+            </div>
+            <div class="item-acts">
+              <span class="${pillCls}" id="pill-${item.key}"
+                style="${count > 0 ? 'cursor:pointer' : ''}"
+                onclick="${count > 0 ? 'toggleFunderEntries()' : ''}"
+                title="${count > 0 ? 'Click to view your funder wishlist' : ''}">${pillTxt}</span>
+              <button class="act-btn" onclick="toggleFunderForm()" id="funder-toggle-btn">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2v6M2 5h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                Add funder
+              </button>
+            </div>
+          </div>
+          <div id="funder-entries-panel" style="display:none;border-top:1px solid var(--border);background:var(--cream);padding:10px 18px 6px">
+            <div style="font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px">Your funder wishlist</div>
+            <div id="funder-entries-list"></div>
+          </div>
+          <div id="funder-form-panel" style="display:none;border-top:1px solid var(--border);background:var(--cream);padding:14px 18px">
+            <div style="display:grid;grid-template-columns:1.5fr 1.5fr 2fr auto auto;gap:8px;margin-bottom:8px">
+              <input id="funder-name"    type="text" placeholder="Funder name *"  style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
+              <input id="funder-website" type="text" placeholder="Website (optional)" style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
+              <input id="funder-notes"   type="text" placeholder="Notes (optional)" style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
+              <label style="display:flex;align-items:center;gap:5px;font-size:13px;color:var(--ink);white-space:nowrap;cursor:pointer">
+                <input id="funder-contact" type="checkbox" style="width:14px;height:14px;cursor:pointer"> Have contact
+              </label>
+              <button onclick="addFunder()" class="act-btn" style="background:var(--navy);color:#fff;border-color:var(--navy);white-space:nowrap">+ Add</button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span id="funder-status-msg" style="font-size:12px;color:var(--ink-3)"></span>
+              <button onclick="toggleFunderForm()" class="act-btn" style="background:var(--copper);color:#fff;border-color:var(--copper)">Done</button>
             </div>
           </div>
         </div>`;
@@ -861,6 +921,39 @@ function renderItems() {
 let stakeholderList = [];
 let submittedStakeholders = [];
 let shDoneTimer = null;
+
+function toggleStakeholderEntries() {
+  const panel = document.getElementById('sh-entries-panel');
+  const list  = document.getElementById('sh-entries-list');
+  const pill  = document.getElementById('pill-stakeholders');
+  if (!panel) return;
+  const open = panel.style.display === 'none';
+  panel.style.display = open ? 'block' : 'none';
+  /* Populate entries list when opening */
+  if (open && list) {
+    const relLabel = { 'Board member':'Board','Staff member':'Staff','Contractor/Consultant':'Contractor','Community partner':'Community','Funder':'Funder','Other':'Other' };
+    if (submittedStakeholders.length === 0) {
+      list.innerHTML = '<div style="font-size:13px;color:var(--ink-3);font-style:italic;padding:4px 0">No entries yet.</div>';
+    } else {
+      list.innerHTML = submittedStakeholders.map(s => `
+        <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fff;border:1px solid var(--border);border-radius:var(--rs);margin-bottom:5px">
+          <div style="flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:6px">
+            <span style="font-size:13px;font-weight:500;color:var(--ink)">${s.name}</span>
+            ${s.role ? `<span style="font-size:12px;color:var(--ink-3)">${s.role}</span>` : ''}
+            <span style="font-size:12px;color:var(--ink-3)">${s.email}</span>
+            ${s.relationship ? `<span style="font-size:10px;font-weight:500;padding:2px 6px;border-radius:10px;background:var(--blue-lt);color:var(--blue-dk)">${relLabel[s.relationship]||s.relationship}</span>` : ''}
+          </div>
+        </div>`).join('');
+    }
+    /* Update pill to show collapse hint */
+    if (pill) pill.title = 'Click to collapse';
+  } else if (pill) {
+    pill.title = 'Click to view submitted entries';
+  }
+  /* Close add form if open */
+  const formPanel = document.getElementById('sh-form-panel');
+  if (formPanel) formPanel.style.display = 'none';
+}
 
 async function toggleStakeholderForm(showSubmitted = false) {
   const panel = document.getElementById('sh-form-panel');
@@ -979,14 +1072,37 @@ async function addStakeholder() {
       if (stakeholderList.length === 0 && doneBtn) doneBtn.style.display = 'none';
     }, 180000);
   }
-  await saveStakeholderEntry(entry);
+  const saved = await saveStakeholderEntry(entry);
+  if (saved) {
+    /* Add to in-memory list immediately */
+    submittedStakeholders.push(entry);
+    itemStatus['stakeholders'] = submittedStakeholders.length;
+    /* Update pill count directly without full re-render */
+    const pill = document.getElementById('pill-stakeholders');
+    const ic   = document.getElementById('ic-stakeholders');
+    if (pill) {
+      pill.className = 'pill pill-r';
+      pill.textContent = submittedStakeholders.length === 1 ? '1 identified' : `${submittedStakeholders.length} identified`;
+      pill.style.cursor = 'pointer';
+      pill.onclick = toggleStakeholderEntries;
+      pill.title = 'Click to view submitted entries';
+    }
+    if (ic) { ic.className = 'item-ic ic-r'; ic.innerHTML = ICONS.check; }
+    /* If entries panel is open, refresh it */
+    const entriesPanel = document.getElementById('sh-entries-panel');
+    if (entriesPanel && entriesPanel.style.display !== 'none') {
+      toggleStakeholderEntries(); /* close */
+      toggleStakeholderEntries(); /* reopen with updated list */
+    }
+    /* Show a brief confirmation */
+    const msg = document.getElementById('sh-status-msg');
+    if (msg) { msg.textContent = `✓ ${entry.name} saved`; setTimeout(() => { if(msg) msg.textContent = ''; }, 3000); }
+  }
 }
 
 async function saveStakeholderEntry(entry) {
   if (ENGAGEMENT.appsScriptUrl === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') {
-    itemStatus['stakeholders'] = (typeof itemStatus['stakeholders'] === 'number' ? itemStatus['stakeholders'] : 0) + 1;
-    updateStakeholderPill();
-    return;
+    return true;
   }
   try {
     /* Use GET with params to avoid CORS POST restrictions */
@@ -1000,13 +1116,14 @@ async function saveStakeholderEntry(entry) {
     const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?' + params.toString(), { mode: 'cors' });
     const data = await res.json();
     if (data.added) {
-      itemStatus['stakeholders'] = (typeof itemStatus['stakeholders'] === 'number' ? itemStatus['stakeholders'] : 0) + 1;
-      updateStakeholderPill();
+      return true;
     } else {
       document.getElementById('sh-status-msg').textContent = 'Save failed — please try again.';
+      return false;
     }
   } catch(e) {
     document.getElementById('sh-status-msg').textContent = 'Save failed — please check your connection and try again.';
+    return false;
   }
 }
 
@@ -1101,6 +1218,17 @@ async function fetchUpdates() {
   }
 }
 
+/* ── FETCH FUNDERS FROM APPS SCRIPT ── */
+async function fetchFunders() {
+  if (ENGAGEMENT.appsScriptUrl === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE' ||
+      ENGAGEMENT.appsScriptUrl === 'PASTE_HPI_APPS_SCRIPT_URL_HERE') return [];
+  try {
+    const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?action=getFunders', { mode: 'cors' });
+    const data = await res.json();
+    return data.funders || [];
+  } catch(e) { return []; }
+}
+
 /* ── CONFIRM SCHEDULING ──
    Called when client clicks "I've scheduled" button.
    Writes a confirmation row to the sheet via Apps Script. */
@@ -1156,8 +1284,12 @@ async function loadAllStatus() {
   const shPanel = document.getElementById('sh-form-panel');
   const shPanelOpen = shPanel ? shPanel.style.display !== 'none' : false;
 
-  const [statusData, updates] = await Promise.all([fetchStatus(), fetchUpdates()]);
+  const [statusData, updates, stakeholders, funders] = await Promise.all([fetchStatus(), fetchUpdates(), fetchStakeholders(), fetchFunders()]);
   Object.assign(itemStatus, statusData);
+  submittedStakeholders = stakeholders || [];
+  if (submittedStakeholders.length > 0) itemStatus['stakeholders'] = submittedStakeholders.length;
+  submittedFunders = funders || [];
+  if (submittedFunders.length > 0) itemStatus['funders'] = submittedFunders.length;
   renderItems();
   renderUpdates(updates);
 
@@ -1171,6 +1303,100 @@ async function loadAllStatus() {
   }
 
   if (icon) icon.classList.remove('spin');
+}
+
+/* ── FUNDER WISHLIST LOGIC ── */
+let submittedFunders = [];
+
+function toggleFunderEntries() {
+  const panel = document.getElementById('funder-entries-panel');
+  const list  = document.getElementById('funder-entries-list');
+  if (!panel) return;
+  const open = panel.style.display === 'none';
+  panel.style.display = open ? 'block' : 'none';
+  if (open && list) {
+    if (submittedFunders.length === 0) {
+      list.innerHTML = '<div style="font-size:13px;color:var(--ink-3);font-style:italic;padding:4px 0">No funders added yet.</div>';
+    } else {
+      list.innerHTML = submittedFunders.map(f => `
+        <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fff;border:1px solid var(--border);border-radius:var(--rs);margin-bottom:5px">
+          <div style="flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:6px">
+            <span style="font-size:13px;font-weight:500;color:var(--ink)">${f.name}</span>
+            ${f.website ? `<a href="${f.website.startsWith('http') ? f.website : 'https://'+f.website}" target="_blank" style="font-size:12px;color:var(--copper);text-decoration:none">${f.website}</a>` : ''}
+            ${f.notes ? `<span style="font-size:12px;color:var(--ink-3)">${f.notes}</span>` : ''}
+            ${f.hasContact === 'yes' ? `<span style="font-size:10px;font-weight:500;padding:2px 6px;border-radius:10px;background:var(--green-lt);color:var(--green-dk)">Has contact</span>` : ''}
+          </div>
+        </div>`).join('');
+    }
+  }
+  /* Close add form if open */
+  const formPanel = document.getElementById('funder-form-panel');
+  if (formPanel) formPanel.style.display = 'none';
+}
+
+function toggleFunderForm() {
+  const panel = document.getElementById('funder-form-panel');
+  if (!panel) return;
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+  /* Close entries panel if open */
+  const entriesPanel = document.getElementById('funder-entries-panel');
+  if (entriesPanel) entriesPanel.style.display = 'none';
+}
+
+async function addFunder() {
+  const name       = document.getElementById('funder-name').value.trim();
+  const website    = document.getElementById('funder-website').value.trim();
+  const notes      = document.getElementById('funder-notes').value.trim();
+  const hasContact = document.getElementById('funder-contact').checked ? 'yes' : 'no';
+  const msg        = document.getElementById('funder-status-msg');
+  if (!name) { if (msg) msg.textContent = 'Funder name is required.'; return; }
+  if (msg) msg.textContent = '';
+  const entry = { name, website, notes, hasContact };
+  const saved = await saveFunderEntry(entry);
+  if (saved) {
+    submittedFunders.push(entry);
+    itemStatus['funders'] = submittedFunders.length;
+    document.getElementById('funder-name').value    = '';
+    document.getElementById('funder-website').value = '';
+    document.getElementById('funder-notes').value   = '';
+    document.getElementById('funder-contact').checked = false;
+    /* Update pill */
+    const pill = document.getElementById('pill-funders');
+    const ic   = document.getElementById('ic-funders');
+    if (pill) {
+      pill.className = 'pill pill-r';
+      pill.textContent = submittedFunders.length === 1 ? '1 added' : `${submittedFunders.length} added`;
+      pill.style.cursor = 'pointer';
+      pill.onclick = toggleFunderEntries;
+      pill.title = 'Click to view your funder wishlist';
+    }
+    if (ic) { ic.className = 'item-ic ic-r'; ic.innerHTML = ICONS.check; }
+    if (msg) { msg.textContent = `✓ ${name} added`; setTimeout(() => { if(msg) msg.textContent = ''; }, 3000); }
+  }
+}
+
+async function saveFunderEntry(entry) {
+  if (ENGAGEMENT.appsScriptUrl === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE' ||
+      ENGAGEMENT.appsScriptUrl === 'PASTE_HPI_APPS_SCRIPT_URL_HERE') return true;
+  try {
+    const params = new URLSearchParams({
+      action:     'addFunder',
+      name:       entry.name       || '',
+      website:    entry.website    || '',
+      notes:      entry.notes      || '',
+      hasContact: entry.hasContact || 'no',
+    });
+    const res  = await fetch(ENGAGEMENT.appsScriptUrl + '?' + params.toString(), { mode: 'cors' });
+    const data = await res.json();
+    if (data.added) return true;
+    const msg = document.getElementById('funder-status-msg');
+    if (msg) msg.textContent = 'Save failed — please try again.';
+    return false;
+  } catch(e) {
+    const msg = document.getElementById('funder-status-msg');
+    if (msg) msg.textContent = 'Save failed — please check your connection.';
+    return false;
+  }
 }
 
 /* ── INIT ── */
