@@ -306,7 +306,7 @@ const ENGAGEMENT = {
     { type: "Community partner", required: 1 },
   ],
   calendlyEvents: {
-    working_session: "https://api.calendly.com/event_types/osod/working-session-hpi",
+    working_session: "https://api.calendly.com/event_types/osod/working-session",
     prelim_review:   "https://api.calendly.com/event_types/osod/preliminary-review-deliverables",
   },
 
@@ -317,7 +317,7 @@ const ENGAGEMENT = {
   tools: [
     { label: "Project Google Drive",  sub: "Shared docs & deliverables", cta: "Open folder →",   href: "https://drive.google.com/drive/folders/1deQOkCtMgGJRS7AZu9UWynjOIx3IL14M",                                                                          dot: "tg", icon: "drive" },
     { label: "Logic model generator", sub: "Access the form here",       cta: "Open form →",     href: "https://docs.google.com/forms/d/e/1FAIpQLScuZ0i0bx9qAfRszQMywx6o4MWUpiYLA_jqhgzLIfbzrFpv7A/viewform?usp=sharing&ouid=114598678112851033096", dot: "ta", icon: "form"  },
-    { label: "Schedule a touchbase",  sub: "Questions or check-ins",     cta: "Open Calendly →", href: "https://calendly.com/osod/15-min-client-touch-base",                                                                           dot: "tc", icon: "cal"   },
+    { label: "Schedule a touchbase",  sub: "Stuck on something or have a question? Book a quick 15-min check-in →", cta: "Open Calendly →", href: "https://calendly.com/osod/15-min-client-touch-base",                                                                           dot: "tc", icon: "cal"   },
     { label: "",                      sub: "",                            cta: "",                href: "",                                                                                                         dot: "",   icon: "blank" },
   ],
 
@@ -332,7 +332,7 @@ const ITEMS = [
 
   /* ── ORGANIZATION DOCUMENTS ── */
   { key: "form_990",       label: "IRS Form 990",                    hint: "Most recent year filed",                                                                    cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSde3mNo6XcHbQXYPzbi3l2QgGKIuvyPOii1LzBBO3IKC0-Mlg/viewform?usp=publish-editor" },
-  { key: "annual_report",  label: "Annual report",                   hint: "Most recent available — 2024 or 2023",                                                      cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScz83NDtuxT9dvGwAQgaZZbxqSzjLdZtN7p62mKQF2wYCmbmg/viewform?usp=publish-editor" },
+  { key: "annual_report",  label: "Annual report",                   hint: "Most recent available — 2024 or 2023",                                                      cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeFUWPsvfDT1V2s-OQSQiJBizWWhvopoxgqe6pSQbO9EbiBmQ/viewform?usp=header" },
   { key: "org_budget",     label: "Organization operating budget",   hint: "2026 full organization budget",                                                             cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdS3ke5h6cJNBD9vovM6-dwMgAbhMe6OdeKfhUdmZf4TmYZSQ/viewform?usp=publish-editor" },
   { key: "program_budgets",label: "Program budget(s)",               hint: "Upload one per program — you can submit this form multiple times",                          cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSd6TyBe8cp5qCGxZ4Gqxl0rk48qYRelWNTIBMn110DdLboAZA/viewform?usp=publish-editor", multiSubmit: true },
   { key: "grant_largest",  label: "Largest grant application",       hint: "Your largest grant — any year",                                                             cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeyYYth16zJwfZYBzFPZt9imD9_FftKrZwgtERoLO0dKF4JPQ/viewform?usp=publish-editor" },
@@ -341,15 +341,13 @@ const ITEMS = [
   { key: "marketing",      label: "Marketing materials",             hint: "Brochures, one-pagers, website screenshots, etc. — you can submit this form multiple times", cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeqhRY703XWc6M_dAcZesde0KNw_rKLuhU7Ni4RwUmfChrD4A/viewform?usp=publish-editor", multiSubmit: true },
 
   /* ── STAKEHOLDER LIST ── */
-  { key: "stakeholders", label: "Stakeholder identification", hint: "Add the people we should speak with — board members, program staff, or community partners", cat: "Stakeholders", type: "stakeholder" },
+  { key: "additional_docs", label: "Additional documents", hint: "Anything else you'd like to share — reports, presentations, previous grant materials, funder lists, or any other relevant files. You can submit this form multiple times.", cat: "Organization documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfmEWWLyYIpwnZYVhoq_wmceEfoUowrzVMczQfjgQ0ZjZF2jg/viewform?usp=publish-editor", multiSubmit: true },
+  { key: "stakeholders", label: "Stakeholder identification", hint: "Add the people we should speak with — we'll reach out directly and copy you on the email", cat: "Stakeholders", type: "stakeholder" },
 
   /* ── LOGIC MODEL GENERATOR ── */
-  { key: "lm_ed",  label: "Logic model — Executive Director", hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdHlXVsSqk3jkMwY3sq5TetutqsHS7-utfW1qMYcO0j2l9-0A/viewform?usp=publish-editor", isLM: true },
-  { key: "lm_pd1", label: "Logic model — Program Director, Site 1",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSf2XgOKrhXYSw4wBz6oBsNJ-urwqEYHM2pStMu2iauTL900LA/viewform?usp=publish-editor", isLM: true },
-  { key: "lm_pd2", label: "Logic model — Program Director, Site 2",                  hint: "Submit the form → you'll receive a completed doc via email from jsarahscott132@gmail.com → upload that document using the upload button below.", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScKDPY1yThIx6-4MgVWr4oLlaU1lR-WYOEcsBQPn2FtYZI83A/viewform?usp=publish-editor", isLM: true },
-
-  /* ── ADDITIONAL DOCUMENTS ── */
-  { key: "additional_docs", label: "Additional documents", hint: "Anything else you'd like to share — reports, presentations, previous grant materials, funder lists, or any other relevant files. You can submit this form multiple times.", cat: "Additional documents", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSde3mNo6XcHbQXYPzbi3l2QgGKIuvyPOii1LzBBO3IKC0-Mlg/viewform?usp=publish-editor", multiSubmit: true },
+  { key: "lm_ed",  label: "Logic model — Executive Director", hint: "", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdHlXVsSqk3jkMwY3sq5TetutqsHS7-utfW1qMYcO0j2l9-0A/viewform?usp=publish-editor", isLM: true },
+  { key: "lm_pd1", label: "Logic model — Program Director, Site 1",                  hint: "", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSf2XgOKrhXYSw4wBz6oBsNJ-urwqEYHM2pStMu2iauTL900LA/viewform?usp=publish-editor", isLM: true },
+  { key: "lm_pd2", label: "Logic model — Program Director, Site 2",                  hint: "", cat: "Logic model generator", type: "doc", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLScKDPY1yThIx6-4MgVWr4oLlaU1lR-WYOEcsBQPn2FtYZI83A/viewform?usp=publish-editor", isLM: true },
 
   /* ── FUNDER WISHLIST ── */
   { key: "funders", label: "Funder wishlist", hint: "Know of a funder you'd like us to research? Add them here — name, website, and any notes. We'll include them in our funder research.", cat: "Funder wishlist", type: "funder" },
@@ -379,7 +377,7 @@ const ITEMS = [
     <div class="mp"><span class="lbl">Engagement</span><span class="val" id="meta-type"></span></div>
     <div class="mp"><span class="lbl">Contract begin</span><span class="val" id="meta-begin"></span></div>
     <div class="mp"><span class="lbl">Contract end</span><span class="val" id="meta-end"></span></div>
-    <div class="mp"><span class="lbl">Your lead</span><span class="val">Renee Wormack-Keels</span></div>
+    <div class="mp"><span class="lbl">Your lead</span><span class="val">Jennifer McKenzie</span></div>
   </div>
   <div class="closed-message" id="closed-msg">
     <h3 id="closed-heading"></h3>
@@ -395,7 +393,7 @@ const ITEMS = [
   <!-- START HERE -->
   <div class="card" id="start-here-card">
     <div class="card-head">
-      <h2>Start here</h2>
+      <h2>What we need from you</h2>
       <span class="pill pill-p" id="start-sum-pill">Loading…</span>
     </div>
     <div id="start-here-list"></div>
@@ -583,9 +581,9 @@ function renderStartHere(phases) {
 
   const steps = [
     { num: 1, done: docDone,   label: "Upload your organization documents", why: "Helps us understand your current state and funding history",          time: "15–20 min",      sub: docDone ? "All documents received — thank you!" : "Use the upload buttons in Documents & Scheduling below" },
-    { num: 2, done: lmDone,    label: "Complete the logic model generator",  why: "Clarifies your program design in the language funders use",            time: "20–30 min each", sub: lmDone ? "All logic models received — thank you!" : `${lmCount} of ${lmItems.length} submitted · Access the form in Tools & Links` },
+    { num: 2, done: lmDone,    label: "Complete the logic model generator",  why: "Helps us understand your program design so we can develop funder and mission-aligned language on your behalf",            time: "20–30 min each", sub: lmDone ? "All logic models received — thank you!" : `${lmCount} of ${lmItems.length} submitted · Access the form in Tools & Links` },
     { num: 3, done: schedDone, label: "Schedule your sessions",              why: "Sets the pace and keeps the engagement on track",                      time: "5 min",          sub: schedDone ? "All sessions scheduled" : "Use the Schedule buttons in Documents & Scheduling below" },
-    { num: 4, done: false,     label: "Identify your stakeholders",          why: "Ensures we capture real perspectives from people closest to the work", time: "10 min",         sub: `See the stakeholder row in Documents & Scheduling below · You'll receive a separate email about introductions` },
+    { num: 4, done: false,     label: "Identify your stakeholders",          why: "Ensures we capture real perspectives from people closest to the work", time: "10 min",         sub: `Add names and emails in the Stakeholders section below — we'll handle outreach and copy you on every email` },
   ];
 
   if (inReview) steps.push({
@@ -598,6 +596,12 @@ function renderStartHere(phases) {
   let html = '';
   steps.forEach((s, idx) => {
     const isLast = idx === steps.length - 1;
+    /* Insert logic model tip after step 2 */
+    if (idx === 2) {
+      html += `<div style="margin:0;padding:10px 18px;background:var(--blue-lt);border-bottom:1px solid var(--border);font-size:12px;color:var(--blue-dk);line-height:1.6">
+        <strong>Logic model tip:</strong> Please share this portal link with each of your program/site leads so they can complete and upload a logic model for their program/site below.
+      </div>`;
+    }
     html += `<div style="display:flex;gap:14px;padding:14px 18px;border-bottom:${isLast?'none':'1px solid var(--border)'}">
       <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0">
         <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;background:${s.done?'var(--green-lt)':'var(--navy)'};color:${s.done?'#085041':'#fff'};flex-shrink:0">${s.done?chk:s.num}</div>
@@ -612,7 +616,7 @@ function renderStartHere(phases) {
           <span style="font-size:11px;color:var(--ink-3)">${s.time}</span>
         </div>
       </div>
-      <div style="flex-shrink:0;padding-top:4px"><span style="font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap;background:${s.done?'var(--green-lt)':'var(--amber-lt)'};color:${s.done?'#085041':'#633806'}">${s.done?'Complete':'To do'}</span></div>
+      <div style="flex-shrink:0;padding-top:4px"><span style="font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap;background:${s.done?'var(--green-lt)':'transparent'};color:${s.done?'#085041':'transparent'};border:${s.done?'none':'none'}">${s.done?'Complete':''}</span></div>
     </div>`;
   });
 
@@ -845,9 +849,11 @@ function renderItems() {
               <input id="funder-name"    type="text" placeholder="Funder name *"  style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
               <input id="funder-website" type="text" placeholder="Website (optional)" style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
               <input id="funder-notes"   type="text" placeholder="Notes (optional)" style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
-              <label style="display:flex;align-items:center;gap:5px;font-size:13px;color:var(--ink);white-space:nowrap;cursor:pointer">
-                <input id="funder-contact" type="checkbox" style="width:14px;height:14px;cursor:pointer"> Have contact
-              </label>
+              <select id="funder-contact" style="font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--ink);font-family:'Source Sans 3',sans-serif;outline:none">
+                <option value="">Do you have a contact there?</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
               <button onclick="addFunder()" class="act-btn" style="background:var(--navy);color:#fff;border-color:var(--navy);white-space:nowrap">+ Add</button>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between">
@@ -1347,7 +1353,7 @@ async function addFunder() {
   const name       = document.getElementById('funder-name').value.trim();
   const website    = document.getElementById('funder-website').value.trim();
   const notes      = document.getElementById('funder-notes').value.trim();
-  const hasContact = document.getElementById('funder-contact').checked ? 'yes' : 'no';
+  const hasContact = document.getElementById('funder-contact').value === 'yes' ? 'yes' : 'no';
   const msg        = document.getElementById('funder-status-msg');
   if (!name) { if (msg) msg.textContent = 'Funder name is required.'; return; }
   if (msg) msg.textContent = '';
@@ -1359,7 +1365,7 @@ async function addFunder() {
     document.getElementById('funder-name').value    = '';
     document.getElementById('funder-website').value = '';
     document.getElementById('funder-notes').value   = '';
-    document.getElementById('funder-contact').checked = false;
+    document.getElementById('funder-contact').value = '';
     /* Update pill */
     const pill = document.getElementById('pill-funders');
     const ic   = document.getElementById('ic-funders');
