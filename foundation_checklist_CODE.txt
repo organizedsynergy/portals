@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundation Checklist Assessment — Organized Synergy</title>
+<!-- ============================================================ -->
+<!-- ORGANIZED SYNERGY — FOUNDATION CHECKLIST ASSESSMENT           -->
+<!-- Paste this ENTIRE block into a single Webflow HTML Embed.     -->
+<!-- It contains everything: fonts, styles, markup, and logic.     -->
+<!-- ============================================================ -->
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600&display=swap" rel="stylesheet">
+
+<style>
+
+  :root {
+    --navy: #212858;
+    --navy-light: #3A4170;
+    --charcoal: #5C6478;
+    --charcoal-dark: #2B2B2B;
+    --steel-blue: #8A95B0;
+    --copper: #D4937A;
+    --copper-hover: #C07E67;
+    --copper-light: #E8C4B4;
+    --copper-faded: #F0D4C6;
+    --warm-gray: #ECE7E1;
+    --cream: #F6F2EE;
+    --white: #FFFFFF;
+    --error: #B71C1C;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Source Sans 3', sans-serif;
+    --font-serif: 'Source Serif 4', Georgia, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100vh; }
+  body {
+    background: var(--cream);
+    font-family: var(--font-body);
+    color: var(--charcoal-dark);
+    line-height: 1.6;
+  }
+
+  /* ==================== HEADER ==================== */
+  .site-header {
+    background: var(--navy);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--warm-gray);
+  }
+  .site-header .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .site-header img {
+    height: 32px;
+    width: auto;
+  }
+  .site-header .assessment-label {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--copper);
+  }
+
+  /* ==================== PROGRESS BAR ==================== */
+  .progress-container {
+    background: var(--warm-gray);
+    padding: 16px 0;
+  }
+  .progress-container .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .progress-step {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--copper);
+  }
+  .progress-eta {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 11px;
+    color: var(--steel-blue);
+  }
+  .progress-bar {
+    height: 4px;
+    background: var(--white);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--copper);
+    transition: width 0.4s ease;
+  }
+
+  /* ==================== MAIN CONTAINER ==================== */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  /* ==================== SCREEN TRANSITIONS ==================== */
+  .screen {
+    display: none;
+    animation: fadeIn 0.35s ease;
+  }
+  .screen.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ==================== TYPOGRAPHY ==================== */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 20px;
+  }
+  .headline {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 1.15;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .headline-large {
+    font-size: 52px;
+  }
+  .subheadline {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--charcoal);
+    line-height: 1.5;
+    margin-bottom: 32px;
+  }
+  .body-text {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--charcoal-dark);
+    margin-bottom: 18px;
+  }
+
+  /* ==================== LANDING PAGE ==================== */
+  .whats-included {
+    margin: 40px 0;
+    padding: 32px 0;
+    border-top: 1px solid var(--warm-gray);
+    border-bottom: 1px solid var(--warm-gray);
+  }
+  .whats-included h3 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 20px;
+  }
+  .whats-included .item {
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-left: 3px solid var(--copper);
+  }
+  .whats-included .item:last-child { margin-bottom: 0; }
+  .whats-included .item-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .whats-included .item-desc {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--charcoal-dark);
+    line-height: 1.6;
+  }
+  .trust-callout {
+    background: var(--warm-gray);
+    padding: 24px 28px;
+    border-left: 3px solid var(--copper);
+    margin: 30px 0;
+  }
+  .trust-callout .callout-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .trust-callout .callout-body {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--charcoal-dark);
+    line-height: 1.6;
+  }
+  .footer-note {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--steel-blue);
+    margin-top: 24px;
+    line-height: 1.6;
+  }
+
+  /* ==================== FORM FIELDS ==================== */
+  .form-group {
+    margin-bottom: 28px;
+  }
+  .form-group label {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .form-group .sublabel {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--steel-blue);
+    margin-bottom: 10px;
+  }
+  .form-group input[type="text"],
+  .form-group input[type="email"] {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--charcoal-dark);
+    background: var(--white);
+    border: 1px solid var(--steel-blue);
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input[type="text"]:focus,
+  .form-group input[type="email"]:focus {
+    border-color: var(--copper);
+  }
+  .form-group input.error {
+    border-color: var(--error);
+  }
+  .error-message {
+    display: none;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--error);
+    margin-top: 6px;
+  }
+  .error-message.show { display: block; }
+
+  /* Radio buttons for role/goal */
+  .radio-group .radio-option {
+    display: block;
+    padding: 14px 16px;
+    background: var(--white);
+    border: 1px solid var(--warm-gray);
+    border-radius: 3px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .radio-group .radio-option:hover {
+    border-color: var(--copper);
+    background: var(--cream);
+  }
+  .radio-group .radio-option.selected {
+    border-color: var(--copper);
+    background: var(--cream);
+  }
+  .radio-group input[type="radio"] {
+    margin-right: 12px;
+    accent-color: var(--copper);
+  }
+  .radio-group label {
+    display: inline;
+    cursor: pointer;
+    font-weight: 400;
+    color: var(--charcoal-dark);
+    font-size: 15px;
+  }
+
+  /* ==================== KFA QUESTION PAGES ==================== */
+  .kfa-header {
+    margin-bottom: 24px;
+  }
+  .kfa-description {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--charcoal);
+    margin-bottom: 16px;
+  }
+  .kfa-framing {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--charcoal-dark);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .honesty-note {
+    background: var(--cream);
+    padding: 14px 18px;
+    border-left: 3px solid var(--copper);
+    margin-bottom: 32px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--charcoal);
+    line-height: 1.5;
+  }
+  .honesty-note strong { color: var(--navy); font-style: normal; }
+
+  .statement {
+    background: var(--white);
+    padding: 20px 24px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    border: 1px solid var(--warm-gray);
+    transition: border-color 0.15s;
+  }
+  .statement.answered {
+    border-color: var(--copper-light);
+  }
+  .statement.unanswered-highlight {
+    border-color: var(--error);
+    background: #FEE7E7;
+  }
+  .statement-text {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--charcoal-dark);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .yes-no-row {
+    display: flex;
+    gap: 12px;
+  }
+  .yes-no-btn {
+    flex: 1;
+    padding: 12px 20px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    background: var(--white);
+    border: 1.5px solid var(--warm-gray);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .yes-no-btn:hover {
+    border-color: var(--copper);
+    color: var(--copper);
+  }
+  .yes-no-btn.selected {
+    background: var(--copper);
+    border-color: var(--copper);
+    color: var(--white);
+  }
+
+  /* ==================== NAVIGATION BUTTONS ==================== */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--warm-gray);
+  }
+  .btn-back {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--steel-blue);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 0;
+    transition: color 0.15s;
+  }
+  .btn-back:hover { color: var(--navy); }
+  .btn-primary {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--copper);
+    border: none;
+    border-radius: 3px;
+    padding: 16px 36px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-primary:hover { background: var(--copper-hover); }
+  .btn-primary.large {
+    padding: 18px 44px;
+    font-size: 15px;
+  }
+  .btn-primary:disabled {
+    background: var(--warm-gray);
+    color: var(--steel-blue);
+    cursor: not-allowed;
+  }
+
+  .page-error {
+    display: none;
+    padding: 12px 16px;
+    background: #FEE7E7;
+    border-left: 3px solid var(--error);
+    color: var(--error);
+    font-family: var(--font-body);
+    font-size: 14px;
+    margin: 20px 0;
+    border-radius: 3px;
+  }
+  .page-error.show { display: block; }
+
+  /* ==================== CONFIRMATION PAGE ==================== */
+  .confirmation .visual {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .confirmation .visual img {
+    max-width: 60%;
+    height: auto;
+    opacity: 0.85;
+  }
+  .next-steps {
+    margin: 32px 0;
+  }
+  .next-step {
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-left: 3px solid var(--copper);
+  }
+  .next-step-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 4px;
+  }
+  .next-step-body {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--charcoal-dark);
+    line-height: 1.6;
+  }
+  .jennifer-note {
+    background: var(--warm-gray);
+    padding: 24px 28px;
+    border-left: 3px solid var(--copper);
+    margin: 32px 0;
+  }
+  .jennifer-note-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .jennifer-note-body {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--charcoal-dark);
+    line-height: 1.6;
+  }
+
+  /* ==================== MOBILE ==================== */
+  @media (max-width: 640px) {
+    main { padding: 40px 20px 60px; }
+    .headline { font-size: 32px; }
+    .headline-large { font-size: 38px; }
+    .subheadline { font-size: 17px; }
+    .site-header .container { padding: 0 20px; }
+    .progress-container .container { padding: 0 20px; }
+    .yes-no-row { flex-direction: row; }
+    .btn-primary { padding: 14px 24px; }
+  }
+
+</style>
+
+
+
+
+<header class="site-header">
+  <div class="container">
+    <span style="font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--white); letter-spacing: 0.02em;">ORGANIZED SYNERGY</span>
+    <div class="assessment-label">FOUNDATION CHECKLIST</div>
+  </div>
+</header>
+
+<div class="progress-container" id="progressContainer" style="display: none;">
+  <div class="container">
+    <div class="progress-labels">
+      <div class="progress-step" id="progressStep">STEP 1 OF 6</div>
+      <div class="progress-eta" id="progressEta">About 5 minutes</div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ============ SCREEN 1: LANDING ============ -->
+  <div class="screen active" id="screen-landing">
+    <div class="eyebrow">NONPROFIT SUSTAINABILITY: FUNDRAISING FOUNDATION SNAPSHOT</div>
+    <h1 class="headline headline-large">How solid is your fundraising foundation?</h1>
+    <p class="subheadline">A short assessment for nonprofit leaders — followed by a custom snapshot of what you've built, what's ahead, and what your foundation is currently made of.</p>
+
+    <p class="body-text">Every fundraising strategy sits on a foundation. Some foundations are made of straw — held together by personal effort and constant attention. Others are built of brick and mortar — structural, self-reinforcing, sustainable.</p>
+
+    <p class="body-text">Most nonprofits sit somewhere in between.</p>
+
+    <p class="body-text">The Foundation Checklist reads the 22 practices and structures most telling about where your fundraising currently stands. What you'll receive is a custom snapshot of your foundation — where it's strong, where it's forming, and what building work is available at your stage.</p>
+
+    <div class="whats-included">
+      <h3>WHAT YOU'LL RECEIVE</h3>
+      <div class="item">
+        <div class="item-title">Your stage on the foundation spectrum</div>
+        <div class="item-desc">A clear read on where your fundraising foundation currently stands, from Straw to Brick &amp; Mortar.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">A snapshot of five Key Foundational Areas</div>
+        <div class="item-desc">Direct language about what you've built in each area and where the structure is still forming.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">The building work ahead</div>
+        <div class="item-desc">The specific work available at your stage, sorted by who typically carries it — executive-led, board-led, and shared.</div>
+      </div>
+    </div>
+
+    <div class="trust-callout">
+      <div class="callout-title">5 minutes to complete. 48 hours to review.</div>
+      <div class="callout-body">Jennifer personally reviews every submission and prepares your results within 48 hours (excluding weekends). You'll receive a custom PDF and a personal note by email.</div>
+    </div>
+
+    <div style="margin-top: 40px;">
+      <button class="btn-primary large" onclick="goToScreen('leader-info')">BEGIN THE ASSESSMENT →</button>
+    </div>
+
+    <p class="footer-note">The Foundation Checklist is designed for executive directors, CEOs, and development leaders at nonprofits of any size. Your responses are confidential and used only to generate your custom results.</p>
+  </div>
+
+  <!-- ============ SCREEN 2: LEADER INFO ============ -->
+  <div class="screen" id="screen-leader-info">
+    <div class="eyebrow">BEFORE WE BEGIN</div>
+    <h1 class="headline">A few quick details.</h1>
+    <p class="subheadline">So we can send your results to the right place — and give your foundation the right context.</p>
+
+    <div class="page-error" id="info-page-error">Please complete all fields to continue.</div>
+
+    <div class="form-group">
+      <label for="fullName">Your name</label>
+      <input type="text" id="fullName" placeholder="First and last name">
+      <div class="error-message" id="fullName-error">Please enter your name.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" id="email" placeholder="Where should we send your results?">
+      <div class="error-message" id="email-error">Please enter a valid email address.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="orgName">Organization name</label>
+      <input type="text" id="orgName" placeholder="Your nonprofit's name">
+      <div class="error-message" id="orgName-error">Please enter your organization name.</div>
+    </div>
+
+    <div class="form-group">
+      <label>Your role</label>
+      <div class="radio-group" data-field="role">
+        <div class="radio-option" data-value="Executive Director / CEO">
+          <input type="radio" name="role" id="role-1" value="Executive Director / CEO">
+          <label for="role-1">Executive Director / CEO</label>
+        </div>
+        <div class="radio-option" data-value="Development Director / Chief Development Officer">
+          <input type="radio" name="role" id="role-2" value="Development Director / Chief Development Officer">
+          <label for="role-2">Development Director / Chief Development Officer</label>
+        </div>
+        <div class="radio-option" data-value="Founder">
+          <input type="radio" name="role" id="role-3" value="Founder">
+          <label for="role-3">Founder</label>
+        </div>
+        <div class="radio-option" data-value="Board Chair / Board Member">
+          <input type="radio" name="role" id="role-4" value="Board Chair / Board Member">
+          <label for="role-4">Board Chair / Board Member</label>
+        </div>
+        <div class="radio-option" data-value="Other fundraising or leadership role">
+          <input type="radio" name="role" id="role-5" value="Other fundraising or leadership role">
+          <label for="role-5">Other fundraising or leadership role</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Your annual fundraising goal (approximate)</label>
+      <div class="sublabel">This helps us contextualize your results. No exact numbers needed.</div>
+      <div class="radio-group" data-field="goal">
+        <div class="radio-option" data-value="Under $150,000">
+          <input type="radio" name="goal" id="goal-1" value="Under $150,000">
+          <label for="goal-1">Under $150,000</label>
+        </div>
+        <div class="radio-option" data-value="$150,000 – $500,000">
+          <input type="radio" name="goal" id="goal-2" value="$150,000 – $500,000">
+          <label for="goal-2">$150,000 – $500,000</label>
+        </div>
+        <div class="radio-option" data-value="$500,000 – $2 million">
+          <input type="radio" name="goal" id="goal-3" value="$500,000 – $2 million">
+          <label for="goal-3">$500,000 – $2 million</label>
+        </div>
+        <div class="radio-option" data-value="$2 million – $10 million">
+          <input type="radio" name="goal" id="goal-4" value="$2 million – $10 million">
+          <label for="goal-4">$2 million – $10 million</label>
+        </div>
+        <div class="radio-option" data-value="Over $10 million">
+          <input type="radio" name="goal" id="goal-5" value="Over $10 million">
+          <label for="goal-5">Over $10 million</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goToScreen('landing')">← Return to overview</button>
+      <button class="btn-primary" onclick="submitLeaderInfo()">CONTINUE →</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 3: KFA 1 - FUNDamentals ============ -->
+  <div class="screen" id="screen-kfa-1">
+    <div class="eyebrow">AREA 01 OF 5</div>
+    <div class="kfa-header">
+      <h1 class="headline">FUNDamentals</h1>
+      <p class="kfa-description">Strategy, case for support, goals, and distribution of work.</p>
+      <p class="kfa-framing">These are the structural pieces most fundraising rests on — the strategy, the story, the goals, and who carries the work.</p>
+    </div>
+
+    <div class="honesty-note"><strong>Yes = fully in place today.</strong> No = not yet, even if partway there. Answer honestly — this only works if it's accurate.</div>
+
+    <div class="page-error" id="kfa-1-page-error">Please answer all statements on this page to continue.</div>
+
+    <div class="statement" data-question="q1">
+      <div class="statement-text">1. We have a written fundraising strategy.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q1', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q1', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q2">
+      <div class="statement-text">2. A fundraising strategy and/or goals are used to guide decisions about what to pursue and what not to pursue.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q2', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q2', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q3">
+      <div class="statement-text">3. We have a clearly articulated case for support.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q3', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q3', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q4">
+      <div class="statement-text">4. We have written fundraising goals that have been shared with the board.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q4', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q4', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q5">
+      <div class="statement-text">5. At least one person, besides the executive leader, has fundraising tasks written into their job description.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q5', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q5', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q6">
+      <div class="statement-text">6. The executive leader has at least one person they can rely on to help with fundraising tasks.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q6', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q6', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goToScreen('leader-info')">← Previous</button>
+      <button class="btn-primary" onclick="validateKfa(1, ['q1','q2','q3','q4','q5','q6'], 'kfa-2')">CONTINUE →</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 4: KFA 2 - Board Engagement ============ -->
+  <div class="screen" id="screen-kfa-2">
+    <div class="eyebrow">AREA 02 OF 5</div>
+    <div class="kfa-header">
+      <h1 class="headline">Board Engagement &amp; Participation</h1>
+      <p class="kfa-description">Board role, financial contribution, and networking.</p>
+      <p class="kfa-framing">How the board shows up — the role they play in fundraising, what they give, and how they open doors.</p>
+    </div>
+
+    <div class="honesty-note"><strong>Yes = fully in place today.</strong> No = not yet, even if partway there. Answer honestly — this only works if it's accurate.</div>
+
+    <div class="page-error" id="kfa-2-page-error">Please answer all statements on this page to continue.</div>
+
+    <div class="statement" data-question="q7">
+      <div class="statement-text">1. Board members have a clear, defined, documented role in fundraising.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q7', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q7', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q8">
+      <div class="statement-text">2. Every board member contributes financially to the organization each year — at a level meaningful to them.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q8', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q8', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q9">
+      <div class="statement-text">3. Board members actively make introductions, open doors, and use their networks to support our fundraising efforts.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q9', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q9', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q10">
+      <div class="statement-text">4. There is a documented expectation around financial contribution for members of the board of directors.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q10', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q10', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goToScreen('kfa-1')">← Previous</button>
+      <button class="btn-primary" onclick="validateKfa(2, ['q7','q8','q9','q10'], 'kfa-3')">CONTINUE →</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 5: KFA 3 - Cultivation ============ -->
+  <div class="screen" id="screen-kfa-3">
+    <div class="eyebrow">AREA 03 OF 5</div>
+    <div class="kfa-header">
+      <h1 class="headline">Cultivation</h1>
+      <p class="kfa-description">Funder and donor relationship building.</p>
+      <p class="kfa-framing">How relationships with funders and donors get built — the list, the role, and the ongoing contact.</p>
+    </div>
+
+    <div class="honesty-note"><strong>Yes = fully in place today.</strong> No = not yet, even if partway there. Answer honestly — this only works if it's accurate.</div>
+
+    <div class="page-error" id="kfa-3-page-error">Please answer all statements on this page to continue.</div>
+
+    <div class="statement" data-question="q11">
+      <div class="statement-text">1. We have a documented, visible list of the funders and donors we are actively cultivating.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q11', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q11', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q12">
+      <div class="statement-text">2. Funder and/or donor cultivation is a defined part of someone's role.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q12', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q12', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q13">
+      <div class="statement-text">3. We intentionally cultivate relationships with prospective funders and/or donors even when there is no current ask.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q13', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q13', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q14">
+      <div class="statement-text">4. We are in regular, meaningful contact with our current funders and donors — not just when there is an upcoming or pending ask on the table.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q14', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q14', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goToScreen('kfa-2')">← Previous</button>
+      <button class="btn-primary" onclick="validateKfa(3, ['q11','q12','q13','q14'], 'kfa-4')">CONTINUE →</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 6: KFA 4 - Funder-Centric Marketing ============ -->
+  <div class="screen" id="screen-kfa-4">
+    <div class="eyebrow">AREA 04 OF 5</div>
+    <div class="kfa-header">
+      <h1 class="headline">Funder-Centric Marketing</h1>
+      <p class="kfa-description">Campaigns, impact framing, and marketing capacity.</p>
+      <p class="kfa-framing">How the organization communicates with funders and donors — the story, the campaigns, and the capacity to produce them.</p>
+    </div>
+
+    <div class="honesty-note"><strong>Yes = fully in place today.</strong> No = not yet, even if partway there. Answer honestly — this only works if it's accurate.</div>
+
+    <div class="page-error" id="kfa-4-page-error">Please answer all statements on this page to continue.</div>
+
+    <div class="statement" data-question="q15">
+      <div class="statement-text">1. Our impact story is framed with funders and donors in mind and includes the problem, the solution, and what their investment makes possible.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q15', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q15', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q16">
+      <div class="statement-text">2. We use campaigns to communicate with our donors and funders on a regular cadence.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q16', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q16', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q17">
+      <div class="statement-text">3. We regularly review how our campaigns are landing with funders and donors — and what we learn shapes the next round.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q17', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q17', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q18">
+      <div class="statement-text">4. We have the people, skills, and tools to consistently produce the marketing assets for our fundraising campaigns.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q18', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q18', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goToScreen('kfa-3')">← Previous</button>
+      <button class="btn-primary" onclick="validateKfa(4, ['q15','q16','q17','q18'], 'kfa-5')">CONTINUE →</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 7: KFA 5 - Understanding Performance ============ -->
+  <div class="screen" id="screen-kfa-5">
+    <div class="eyebrow">AREA 05 OF 5</div>
+    <div class="kfa-header">
+      <h1 class="headline">Understanding Fundraising Performance</h1>
+      <p class="kfa-description">Metrics, reports, reviews, and accountability.</p>
+      <p class="kfa-framing">How the organization sees, discusses, and adjusts its fundraising — the metrics, the reports, and the shared accountability.</p>
+    </div>
+
+    <div class="honesty-note"><strong>Yes = fully in place today.</strong> No = not yet, even if partway there. Answer honestly — this only works if it's accurate.</div>
+
+    <div class="page-error" id="kfa-5-page-error">Please answer all statements on this page to continue.</div>
+
+    <div class="statement" data-question="q19">
+      <div class="statement-text">1. We track fundraising metrics such as donor retention rate, average gift/grant amount, and pipeline conversion — not just total dollars raised.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q19', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q19', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q20">
+      <div class="statement-text">2. We produce fundraising reports on a regular cadence — monthly or quarterly — that leadership and the board actually use.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q20', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q20', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q21">
+      <div class="statement-text">3. Our board and leadership review fundraising reports together on a regular cadence — and the review shapes what we do for the next cycle.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q21', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q21', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="statement" data-question="q22">
+      <div class="statement-text">4. There is clear, mutual accountability between the executive leader and the board for fundraising outcomes — what we're aiming for, who owns what, and how we adjust.</div>
+      <div class="yes-no-row">
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q22', true)">YES</button>
+        <button class="yes-no-btn" onclick="selectAnswer(this, 'q22', false)">NO</button>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goToScreen('kfa-4')">← Previous</button>
+      <button class="btn-primary large" onclick="submitAssessment()">SUBMIT ASSESSMENT →</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 8: CONFIRMATION ============ -->
+  <div class="screen confirmation" id="screen-confirmation">
+    <div class="eyebrow">SUBMISSION RECEIVED</div>
+    <h1 class="headline">Thank you — your snapshot is being prepared.</h1>
+    <p class="subheadline">Jennifer will personally review your responses and prepare your custom results within 48 hours (excluding weekends).</p>
+
+    <p class="body-text">Your Foundation Checklist submission has been received. Here's what happens next:</p>
+
+    <div class="next-steps">
+      <div class="next-step">
+        <div class="next-step-title">WITHIN 48 HOURS (EXCLUDING WEEKENDS)</div>
+        <div class="next-step-body">Jennifer reviews your responses personally and prepares your custom results.</div>
+      </div>
+      <div class="next-step">
+        <div class="next-step-title">YOU'LL RECEIVE BY EMAIL</div>
+        <div class="next-step-body">A custom PDF snapshot of your fundraising foundation, plus a personal note from Jennifer highlighting what stood out.</div>
+      </div>
+      <div class="next-step">
+        <div class="next-step-title">WHEN YOU'RE READY TO GO DEEPER</div>
+        <div class="next-step-body">Your results email will include a link to schedule a deep dive — a focused consultation where we walk through your specific pattern and map out what comes next.</div>
+      </div>
+    </div>
+
+    <div class="jennifer-note">
+      <div class="jennifer-note-title">A NOTE FROM JENNIFER</div>
+      <div class="jennifer-note-body">"I read every submission carefully. Your results won't be automated — they'll reflect what I actually observed about your foundation. If you have any questions in the meantime, reply to the confirmation email in your inbox. I read every one."</div>
+    </div>
+
+    <p class="footer-note">You'll receive a confirmation email at <span id="confirmEmail" style="color: var(--copper); font-style: normal; font-weight: 600;">your inbox</span> shortly. Your results will arrive within 48 hours. Please add jennifer@organizedsynergy.com to your safe senders list to make sure your results don't land in spam.</p>
+  </div>
+
+</main>
+
+<script>
+  // State
+  const responses = {};
+  const leaderInfo = {};
+
+  // Screen management
+  const screenOrder = ['landing', 'leader-info', 'kfa-1', 'kfa-2', 'kfa-3', 'kfa-4', 'kfa-5', 'confirmation'];
+  const screenSteps = { 'landing': 0, 'leader-info': 1, 'kfa-1': 2, 'kfa-2': 3, 'kfa-3': 4, 'kfa-4': 5, 'kfa-5': 6, 'confirmation': 6 };
+  const screenTotal = 6;
+
+  function goToScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+
+    // Update progress bar
+    const progressContainer = document.getElementById('progressContainer');
+    if (id === 'landing' || id === 'confirmation') {
+      progressContainer.style.display = 'none';
+    } else {
+      progressContainer.style.display = 'block';
+      const step = screenSteps[id];
+      const pct = (step / screenTotal) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressStep').textContent = 'STEP ' + step + ' OF ' + screenTotal;
+
+      // Update ETA based on progress
+      const remaining = screenTotal - step;
+      if (remaining === 0) {
+        document.getElementById('progressEta').textContent = 'Almost there';
+      } else if (remaining <= 2) {
+        document.getElementById('progressEta').textContent = 'About 1 minute left';
+      } else if (remaining <= 4) {
+        document.getElementById('progressEta').textContent = 'About 3 minutes left';
+      } else {
+        document.getElementById('progressEta').textContent = 'About 5 minutes';
+      }
+    }
+  }
+
+  // Radio option selection (roles / goals)
+  document.querySelectorAll('.radio-group').forEach(group => {
+    group.addEventListener('click', function(e) {
+      const option = e.target.closest('.radio-option');
+      if (!option) return;
+      group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+      option.classList.add('selected');
+      option.querySelector('input[type="radio"]').checked = true;
+    });
+  });
+
+  // Leader info submit
+  function submitLeaderInfo() {
+    let valid = true;
+    const errors = [];
+
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const orgName = document.getElementById('orgName').value.trim();
+    const role = document.querySelector('input[name="role"]:checked');
+    const goal = document.querySelector('input[name="goal"]:checked');
+
+    // Reset errors
+    document.querySelectorAll('.form-group input').forEach(i => i.classList.remove('error'));
+    document.querySelectorAll('.error-message').forEach(e => e.classList.remove('show'));
+    document.getElementById('info-page-error').classList.remove('show');
+
+    if (!fullName || fullName.length < 2) {
+      document.getElementById('fullName').classList.add('error');
+      document.getElementById('fullName-error').classList.add('show');
+      valid = false;
+    }
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('email').classList.add('error');
+      document.getElementById('email-error').classList.add('show');
+      valid = false;
+    }
+
+    if (!orgName) {
+      document.getElementById('orgName').classList.add('error');
+      document.getElementById('orgName-error').classList.add('show');
+      valid = false;
+    }
+
+    if (!role) valid = false;
+    if (!goal) valid = false;
+
+    if (!valid) {
+      document.getElementById('info-page-error').classList.add('show');
+      return;
+    }
+
+    leaderInfo.fullName = fullName;
+    leaderInfo.email = email;
+    leaderInfo.orgName = orgName;
+    leaderInfo.role = role.value;
+    leaderInfo.goal = goal.value;
+
+    goToScreen('kfa-1');
+  }
+
+  // KFA answer selection
+  function selectAnswer(btn, questionId, value) {
+    const statement = btn.closest('.statement');
+    statement.querySelectorAll('.yes-no-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    statement.classList.add('answered');
+    statement.classList.remove('unanswered-highlight');
+    responses[questionId] = value;
+  }
+
+  function validateKfa(kfaNum, questionIds, nextScreen) {
+    let allAnswered = true;
+    const errorElement = document.getElementById('kfa-' + kfaNum + '-page-error');
+    errorElement.classList.remove('show');
+    document.querySelectorAll('#screen-kfa-' + kfaNum + ' .statement').forEach(s => {
+      s.classList.remove('unanswered-highlight');
+    });
+
+    questionIds.forEach(qid => {
+      if (responses[qid] === undefined) {
+        allAnswered = false;
+        const statement = document.querySelector('[data-question="' + qid + '"]');
+        if (statement) statement.classList.add('unanswered-highlight');
+      }
+    });
+
+    if (!allAnswered) {
+      errorElement.classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    goToScreen(nextScreen);
+  }
+
+  function submitAssessment() {
+    // Validate KFA 5
+    const kfa5Questions = ['q19','q20','q21','q22'];
+    let allAnswered = true;
+    document.getElementById('kfa-5-page-error').classList.remove('show');
+    document.querySelectorAll('#screen-kfa-5 .statement').forEach(s => {
+      s.classList.remove('unanswered-highlight');
+    });
+
+    kfa5Questions.forEach(qid => {
+      if (responses[qid] === undefined) {
+        allAnswered = false;
+        const statement = document.querySelector('[data-question="' + qid + '"]');
+        if (statement) statement.classList.add('unanswered-highlight');
+      }
+    });
+
+    if (!allAnswered) {
+      document.getElementById('kfa-5-page-error').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    // In production, this would POST to Make.com webhook / Google Sheets
+    document.getElementById('confirmEmail').textContent = leaderInfo.email || 'your inbox';
+    goToScreen('confirmation');
+  }
+</script>
+
+
+<script>
+
+  // State
+  const responses = {};
+  const leaderInfo = {};
+
+  // Screen management
+  const screenOrder = ['landing', 'leader-info', 'kfa-1', 'kfa-2', 'kfa-3', 'kfa-4', 'kfa-5', 'confirmation'];
+  const screenSteps = { 'landing': 0, 'leader-info': 1, 'kfa-1': 2, 'kfa-2': 3, 'kfa-3': 4, 'kfa-4': 5, 'kfa-5': 6, 'confirmation': 6 };
+  const screenTotal = 6;
+
+  function goToScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+
+    // Update progress bar
+    const progressContainer = document.getElementById('progressContainer');
+    if (id === 'landing' || id === 'confirmation') {
+      progressContainer.style.display = 'none';
+    } else {
+      progressContainer.style.display = 'block';
+      const step = screenSteps[id];
+      const pct = (step / screenTotal) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressStep').textContent = 'STEP ' + step + ' OF ' + screenTotal;
+
+      // Update ETA based on progress
+      const remaining = screenTotal - step;
+      if (remaining === 0) {
+        document.getElementById('progressEta').textContent = 'Almost there';
+      } else if (remaining <= 2) {
+        document.getElementById('progressEta').textContent = 'About 1 minute left';
+      } else if (remaining <= 4) {
+        document.getElementById('progressEta').textContent = 'About 3 minutes left';
+      } else {
+        document.getElementById('progressEta').textContent = 'About 5 minutes';
+      }
+    }
+  }
+
+  // Radio option selection (roles / goals)
+  document.querySelectorAll('.radio-group').forEach(group => {
+    group.addEventListener('click', function(e) {
+      const option = e.target.closest('.radio-option');
+      if (!option) return;
+      group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+      option.classList.add('selected');
+      option.querySelector('input[type="radio"]').checked = true;
+    });
+  });
+
+  // Leader info submit
+  function submitLeaderInfo() {
+    let valid = true;
+    const errors = [];
+
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const orgName = document.getElementById('orgName').value.trim();
+    const role = document.querySelector('input[name="role"]:checked');
+    const goal = document.querySelector('input[name="goal"]:checked');
+
+    // Reset errors
+    document.querySelectorAll('.form-group input').forEach(i => i.classList.remove('error'));
+    document.querySelectorAll('.error-message').forEach(e => e.classList.remove('show'));
+    document.getElementById('info-page-error').classList.remove('show');
+
+    if (!fullName || fullName.length < 2) {
+      document.getElementById('fullName').classList.add('error');
+      document.getElementById('fullName-error').classList.add('show');
+      valid = false;
+    }
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('email').classList.add('error');
+      document.getElementById('email-error').classList.add('show');
+      valid = false;
+    }
+
+    if (!orgName) {
+      document.getElementById('orgName').classList.add('error');
+      document.getElementById('orgName-error').classList.add('show');
+      valid = false;
+    }
+
+    if (!role) valid = false;
+    if (!goal) valid = false;
+
+    if (!valid) {
+      document.getElementById('info-page-error').classList.add('show');
+      return;
+    }
+
+    leaderInfo.fullName = fullName;
+    leaderInfo.email = email;
+    leaderInfo.orgName = orgName;
+    leaderInfo.role = role.value;
+    leaderInfo.goal = goal.value;
+
+    goToScreen('kfa-1');
+  }
+
+  // KFA answer selection
+  function selectAnswer(btn, questionId, value) {
+    const statement = btn.closest('.statement');
+    statement.querySelectorAll('.yes-no-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    statement.classList.add('answered');
+    statement.classList.remove('unanswered-highlight');
+    responses[questionId] = value;
+  }
+
+  function validateKfa(kfaNum, questionIds, nextScreen) {
+    let allAnswered = true;
+    const errorElement = document.getElementById('kfa-' + kfaNum + '-page-error');
+    errorElement.classList.remove('show');
+    document.querySelectorAll('#screen-kfa-' + kfaNum + ' .statement').forEach(s => {
+      s.classList.remove('unanswered-highlight');
+    });
+
+    questionIds.forEach(qid => {
+      if (responses[qid] === undefined) {
+        allAnswered = false;
+        const statement = document.querySelector('[data-question="' + qid + '"]');
+        if (statement) statement.classList.add('unanswered-highlight');
+      }
+    });
+
+    if (!allAnswered) {
+      errorElement.classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    goToScreen(nextScreen);
+  }
+
+  function submitAssessment() {
+    // Validate KFA 5
+    const kfa5Questions = ['q19','q20','q21','q22'];
+    let allAnswered = true;
+    document.getElementById('kfa-5-page-error').classList.remove('show');
+    document.querySelectorAll('#screen-kfa-5 .statement').forEach(s => {
+      s.classList.remove('unanswered-highlight');
+    });
+
+    kfa5Questions.forEach(qid => {
+      if (responses[qid] === undefined) {
+        allAnswered = false;
+        const statement = document.querySelector('[data-question="' + qid + '"]');
+        if (statement) statement.classList.add('unanswered-highlight');
+      }
+    });
+
+    if (!allAnswered) {
+      document.getElementById('kfa-5-page-error').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    // In production, this would POST to Make.com webhook / Google Sheets
+    document.getElementById('confirmEmail').textContent = leaderInfo.email || 'your inbox';
+    goToScreen('confirmation');
+  }
+
+</script>
+
+
+<script>
+// Report height to parent Webflow page for iframe auto-resize
+(function() {
+  function reportHeight() {
+    var height = document.body.scrollHeight;
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'setHeight', height: height }, '*');
+    }
+  }
+  // Report on load, resize, and whenever the screen changes
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  // Observe DOM changes (screen transitions change height)
+  var observer = new MutationObserver(reportHeight);
+  observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+  // Also report periodically as a fallback
+  setInterval(reportHeight, 500);
+})();
+</script>
+</body>
+</html>
