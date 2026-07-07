@@ -4,16 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Foundation Checklist Assessment — Organized Synergy</title>
-<!-- ============================================================ -->
-<!-- ORGANIZED SYNERGY — FOUNDATION CHECKLIST ASSESSMENT           -->
-<!-- Paste this ENTIRE block into a single Webflow HTML Embed.     -->
-<!-- It contains everything: fonts, styles, markup, and logic.     -->
-<!-- ============================================================ -->
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600&display=swap" rel="stylesheet">
-
 <style>
-
   :root {
     --navy: #212858;
     --navy-light: #3A4170;
@@ -515,10 +507,9 @@
     .yes-no-row { flex-direction: row; }
     .btn-primary { padding: 14px 24px; }
   }
-
 </style>
-
-
+</head>
+<body>
 
 
 <header class="site-header">
@@ -1131,181 +1122,31 @@
       return;
     }
 
-    // In production, this would POST to Make.com webhook / Google Sheets
+    // ===== SEND TO MAKE.COM WEBHOOK =====
+    var payload = {
+      fullName: leaderInfo.fullName,
+      email: leaderInfo.email,
+      orgName: leaderInfo.orgName,
+      role: leaderInfo.role,
+      goal: leaderInfo.goal,
+      q1:  responses.q1,  q2:  responses.q2,  q3:  responses.q3,  q4:  responses.q4,
+      q5:  responses.q5,  q6:  responses.q6,  q7:  responses.q7,  q8:  responses.q8,
+      q9:  responses.q9,  q10: responses.q10, q11: responses.q11, q12: responses.q12,
+      q13: responses.q13, q14: responses.q14, q15: responses.q15, q16: responses.q16,
+      q17: responses.q17, q18: responses.q18, q19: responses.q19, q20: responses.q20,
+      q21: responses.q21, q22: responses.q22
+    };
+    fetch('https://hook.us2.make.com/adbxqbuqw4sm2xjruofppn3urpc79jmi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(function(err){ console.error('Webhook error:', err); });
+    // ===== END WEBHOOK =====
+
     document.getElementById('confirmEmail').textContent = leaderInfo.email || 'your inbox';
     goToScreen('confirmation');
   }
 </script>
-
-
-<script>
-
-  // State
-  const responses = {};
-  const leaderInfo = {};
-
-  // Screen management
-  const screenOrder = ['landing', 'leader-info', 'kfa-1', 'kfa-2', 'kfa-3', 'kfa-4', 'kfa-5', 'confirmation'];
-  const screenSteps = { 'landing': 0, 'leader-info': 1, 'kfa-1': 2, 'kfa-2': 3, 'kfa-3': 4, 'kfa-4': 5, 'kfa-5': 6, 'confirmation': 6 };
-  const screenTotal = 6;
-
-  function goToScreen(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen-' + id).classList.add('active');
-    window.scrollTo(0, 0);
-
-    // Update progress bar
-    const progressContainer = document.getElementById('progressContainer');
-    if (id === 'landing' || id === 'confirmation') {
-      progressContainer.style.display = 'none';
-    } else {
-      progressContainer.style.display = 'block';
-      const step = screenSteps[id];
-      const pct = (step / screenTotal) * 100;
-      document.getElementById('progressFill').style.width = pct + '%';
-      document.getElementById('progressStep').textContent = 'STEP ' + step + ' OF ' + screenTotal;
-
-      // Update ETA based on progress
-      const remaining = screenTotal - step;
-      if (remaining === 0) {
-        document.getElementById('progressEta').textContent = 'Almost there';
-      } else if (remaining <= 2) {
-        document.getElementById('progressEta').textContent = 'About 1 minute left';
-      } else if (remaining <= 4) {
-        document.getElementById('progressEta').textContent = 'About 3 minutes left';
-      } else {
-        document.getElementById('progressEta').textContent = 'About 5 minutes';
-      }
-    }
-  }
-
-  // Radio option selection (roles / goals)
-  document.querySelectorAll('.radio-group').forEach(group => {
-    group.addEventListener('click', function(e) {
-      const option = e.target.closest('.radio-option');
-      if (!option) return;
-      group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
-      option.classList.add('selected');
-      option.querySelector('input[type="radio"]').checked = true;
-    });
-  });
-
-  // Leader info submit
-  function submitLeaderInfo() {
-    let valid = true;
-    const errors = [];
-
-    const fullName = document.getElementById('fullName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const orgName = document.getElementById('orgName').value.trim();
-    const role = document.querySelector('input[name="role"]:checked');
-    const goal = document.querySelector('input[name="goal"]:checked');
-
-    // Reset errors
-    document.querySelectorAll('.form-group input').forEach(i => i.classList.remove('error'));
-    document.querySelectorAll('.error-message').forEach(e => e.classList.remove('show'));
-    document.getElementById('info-page-error').classList.remove('show');
-
-    if (!fullName || fullName.length < 2) {
-      document.getElementById('fullName').classList.add('error');
-      document.getElementById('fullName-error').classList.add('show');
-      valid = false;
-    }
-
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      document.getElementById('email').classList.add('error');
-      document.getElementById('email-error').classList.add('show');
-      valid = false;
-    }
-
-    if (!orgName) {
-      document.getElementById('orgName').classList.add('error');
-      document.getElementById('orgName-error').classList.add('show');
-      valid = false;
-    }
-
-    if (!role) valid = false;
-    if (!goal) valid = false;
-
-    if (!valid) {
-      document.getElementById('info-page-error').classList.add('show');
-      return;
-    }
-
-    leaderInfo.fullName = fullName;
-    leaderInfo.email = email;
-    leaderInfo.orgName = orgName;
-    leaderInfo.role = role.value;
-    leaderInfo.goal = goal.value;
-
-    goToScreen('kfa-1');
-  }
-
-  // KFA answer selection
-  function selectAnswer(btn, questionId, value) {
-    const statement = btn.closest('.statement');
-    statement.querySelectorAll('.yes-no-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    statement.classList.add('answered');
-    statement.classList.remove('unanswered-highlight');
-    responses[questionId] = value;
-  }
-
-  function validateKfa(kfaNum, questionIds, nextScreen) {
-    let allAnswered = true;
-    const errorElement = document.getElementById('kfa-' + kfaNum + '-page-error');
-    errorElement.classList.remove('show');
-    document.querySelectorAll('#screen-kfa-' + kfaNum + ' .statement').forEach(s => {
-      s.classList.remove('unanswered-highlight');
-    });
-
-    questionIds.forEach(qid => {
-      if (responses[qid] === undefined) {
-        allAnswered = false;
-        const statement = document.querySelector('[data-question="' + qid + '"]');
-        if (statement) statement.classList.add('unanswered-highlight');
-      }
-    });
-
-    if (!allAnswered) {
-      errorElement.classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
-    goToScreen(nextScreen);
-  }
-
-  function submitAssessment() {
-    // Validate KFA 5
-    const kfa5Questions = ['q19','q20','q21','q22'];
-    let allAnswered = true;
-    document.getElementById('kfa-5-page-error').classList.remove('show');
-    document.querySelectorAll('#screen-kfa-5 .statement').forEach(s => {
-      s.classList.remove('unanswered-highlight');
-    });
-
-    kfa5Questions.forEach(qid => {
-      if (responses[qid] === undefined) {
-        allAnswered = false;
-        const statement = document.querySelector('[data-question="' + qid + '"]');
-        if (statement) statement.classList.add('unanswered-highlight');
-      }
-    });
-
-    if (!allAnswered) {
-      document.getElementById('kfa-5-page-error').classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
-    // In production, this would POST to Make.com webhook / Google Sheets
-    document.getElementById('confirmEmail').textContent = leaderInfo.email || 'your inbox';
-    goToScreen('confirmation');
-  }
-
-</script>
-
 
 <script>
 // Report height to parent Webflow page for iframe auto-resize
@@ -1316,13 +1157,10 @@
       window.parent.postMessage({ type: 'setHeight', height: height }, '*');
     }
   }
-  // Report on load, resize, and whenever the screen changes
   window.addEventListener('load', reportHeight);
   window.addEventListener('resize', reportHeight);
-  // Observe DOM changes (screen transitions change height)
   var observer = new MutationObserver(reportHeight);
   observer.observe(document.body, { childList: true, subtree: true, attributes: true });
-  // Also report periodically as a fallback
   setInterval(reportHeight, 500);
 })();
 </script>
